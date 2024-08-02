@@ -7,7 +7,7 @@ import {
 	ApolloProvider,
 	gql,
 } from '@apollo/client';
-import { Button } from 'react-aria-components';
+import { Heading, Input, SearchField } from 'react-aria-components';
 
 const client = new ApolloClient({
 	uri: 'https://rickandmortyapi.com/graphql/',
@@ -40,9 +40,35 @@ client
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
 		<ApolloProvider client={client}>
-			<h1>React-Projekt 👩🏻‍💻</h1>
-			<motion.div animate={{ x: 100 }}>Test</motion.div>
-			<Button>Aria Button</Button>
+			<Heading level="1" className="heading">
+				Rick and Morty React Client
+			</Heading>
+			<nav aria-label="Navigation" className="navigation">
+				<button aria-label="Characters" className="nav__button nav-chars">
+					Characters
+				</button>
+				<button aria-label="Locations" className="nav__button nav-locs">
+					Locations
+				</button>
+				<button aria-label="Episodes" className="nav__button nav-eps">
+					Episodes
+				</button>
+			</nav>
+			<SearchField aria-label="Search form" className="search-form">
+				<Input
+					aria-label="Search"
+					className="search-input"
+					placeholder="Search"
+				/>
+				<motion.button aria-label="Search button" className="search">
+					Search
+				</motion.button>
+			</SearchField>
+			<section className="search-results">
+				<section className="search-results__list"></section>
+				<section className="search-results__images"></section>
+				<section className="search-results__details"></section>
+			</section>
 		</ApolloProvider>
 	</React.StrictMode>
 );

@@ -1,6 +1,7 @@
 body {
 	overflow-x: hidden;
 	background-color: var(--body-background);
+	margin-inline: auto;
 }
 
 .site-wrapper {
@@ -14,6 +15,7 @@ body {
 .site-content {
 	flex-grow: 1;
 	max-width: var(--max-width-m);
+	background-color: var(--gray-10);
 	margin-inline: auto;
 	width: 100%;
 }
@@ -76,5 +78,29 @@ Hauptinhalt. */
 
 	&:where(.custom-width--full) {
 		max-width: 100vi;
+	}
+}
+
+.heading {
+	display: flex;
+	justify-content: center;
+	color: var(--teal-5);
+}
+
+.navigation {
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
+}
+
+.search-form {
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
+	margin-inline: auto;
+	margin-block-start: 1em;
+
+	.search-input {
+		padding-inline-start: 0.5rem;
 	}
 }

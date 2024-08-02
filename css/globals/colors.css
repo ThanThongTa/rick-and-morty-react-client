@@ -15,19 +15,21 @@
 	--off-white: var(--gray-1);
 	--off-black: var(--gray-11);
 	/*  Variablennamen zum Beschreiben der Funktion */
-	--body-background: var(--off-white);
+	--body-background: var(--stone-11);
 
-	--text-color: var(--off-black);
-	--heading-color: var(--blue);
+	--text-color: var(--teal-1);
+	--heading-color: var(--teal-5);
 	--link-color: var(--pink);
-	--link-color-active: var(--blue);
+	--link-color-active: var(--teal-5);
 	/* --nav-link-color: var();
 	--nav-active-link-color: var();*/
 	--button-color: var(--off-white);
-	--button-background-color: var(--blue);
-	--button-border-color: var(--blue);
-	--header-footer-background-color: var(--blue);
-	--header-footer-color: var(--off-white);
+	--button-background-color: var(--teal-5);
+	--button-border-color: var(--teal-5);
+	--header-footer-background-color: var(--teal-5);
+	--header-footer-color: var(--teal-1);
+	--theme-accent-color: var(--pink);
+	--theme-text-color: var(--teal-11);
 
 	--ok-color: var(--green);
 	--warn-color: var(--red);
