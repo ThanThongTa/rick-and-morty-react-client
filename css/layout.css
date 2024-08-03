@@ -9,13 +9,13 @@ body {
 	flex-direction: column;
 	/*  https://ishadeed.com/article/new-viewport-units/ */
 	min-height: 100dvh;
-	background-color: var(--background-color);
+	background-color: var(--body-background);
 }
 
 .site-content {
 	flex-grow: 1;
 	max-width: var(--max-width-m);
-	background-color: var(--gray-10);
+	background-color: var(--content-background);
 	margin-inline: auto;
 	width: 100%;
 }
@@ -84,23 +84,74 @@ Hauptinhalt. */
 .heading {
 	display: flex;
 	justify-content: center;
-	color: var(--teal-5);
-}
-
-.navigation {
-	display: flex;
-	justify-content: center;
-	gap: 1rem;
+	color: var(--heading-color);
 }
 
 .search-form {
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: center;
 	gap: 1rem;
 	margin-inline: auto;
 	margin-block-start: 1em;
+	width: var(--max-width-s);
+
+	.search-categories {
+		display: flex;
+		margin-inline: auto;
+		gap: 1rem;
+		color: var(--text-color);
+	}
+
+	.search-inputs {
+		display: flex;
+		margin-inline: auto;
+		gap: 1rem;
+	}
 
 	.search-input {
 		padding-inline-start: 0.5rem;
+		outline-color: var(--theme-accent-color);
+	}
+}
+
+.search-categories__radio {
+	display: flex;
+	align-items: center;
+	gap: 0.571rem;
+	font-size: 1.143rem;
+	color: var(--text-color);
+	forced-color-adjust: none;
+
+	&:before {
+		content: '';
+		display: block;
+		width: 1.286rem;
+		height: 1.286rem;
+		box-sizing: border-box;
+		border: 0.143rem solid var(--border-color);
+		background: var(--field-background);
+		border-radius: 1.286rem;
+		transition: all 200ms;
+	}
+
+	&[data-pressed]:before {
+		border-color: var(--border-color-pressed);
+	}
+
+	&[data-selected] {
+		&:before {
+			border-color: var(--highlight-background);
+			border-width: 0.429rem;
+		}
+
+		&[data-pressed]:before {
+			border-color: var(--highlight-background-pressed);
+		}
+	}
+
+	&[data-focus-visible]:before {
+		outline: 2px solid var(--focus-ring-color);
+		outline-offset: 2px;
 	}
 }

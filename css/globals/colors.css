@@ -16,6 +16,10 @@
 	--off-black: var(--gray-11);
 	/*  Variablennamen zum Beschreiben der Funktion */
 	--body-background: var(--stone-11);
+	--content-background: var(--gray-10);
+	--field-background: var(--gray-10);
+	--highlight-background: var(--teal-5);
+	--highlight-background-pressed: var(--teal-1);
 
 	--text-color: var(--teal-1);
 	--heading-color: var(--teal-5);
@@ -26,10 +30,13 @@
 	--button-color: var(--off-white);
 	--button-background-color: var(--teal-5);
 	--button-border-color: var(--teal-5);
+	--border-color: var(--teal-5);
+	--border-color-pressed: var(--teal-1);
 	--header-footer-background-color: var(--teal-5);
 	--header-footer-color: var(--teal-1);
-	--theme-accent-color: var(--pink);
+	--theme-accent-color: var(--teal-1);
 	--theme-text-color: var(--teal-11);
+	--focus-ring-color: var(--teal-5);
 
 	--ok-color: var(--green);
 	--warn-color: var(--red);
