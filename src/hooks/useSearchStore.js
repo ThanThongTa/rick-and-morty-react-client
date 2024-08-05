@@ -3,6 +3,8 @@ import { immer } from 'zustand/middleware/immer';
 import { LocalStorageKeys } from '../globals/LocalStorageKeys';
 import { SearchCategories } from '../globals/SearchCategories';
 import { SearchCommands } from '../globals/SearchCommands';
+import { useQuery } from '@apollo/client';
+import { allCharactersQuery } from '../data/getAllCharactersQuery';
 
 export const useSearchStore = create()(
 	immer((set) => ({
@@ -13,7 +15,7 @@ export const useSearchStore = create()(
 		searchCategory: SearchCategories.Characters,
 		characters: getInitialCharacters(),
 		locations: getInitialLocations(),
-		episodes: getInitialEpisodes,
+		episodes: getInitialEpisodes(),
 		dispatch: (args) => set((state) => searchReducer(state, args)),
 	}))
 );
@@ -54,6 +56,20 @@ function getInitialEpisodes() {
 	}
 }
 
+function getAll(category, page) {
+	const { loading, error, data } = useQuery(allCharactersQuery, {
+		variables: { page },
+	});
+	if (error) {
+		console.log(error);
+		return [];
+	}
+	if (loading) {
+		console.log('loading characters');
+	}
+	return data;
+}
+
 function searchReducer(state, { type, data }) {
 	switch (type) {
 		case SearchCommands.GetAllCharacters:
@@ -72,10 +88,31 @@ function searchReducer(state, { type, data }) {
 				state.search = data.search;
 				state.count = data.characters.info.count;
 				state.pages = data.characters.info.pages;
+				// state.characters = data.characters.results;
 				state.currentPage = data.page;
 				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
 			}
 			return state;
+		case SearchCommands.SetCategory:
+			if (data) {
+				state.searchCategory = data;
+			}
+			return state;
+		case SearchCommands.SetCharacters:
+			if (data) {
+				state.characters = data;
+			}
+			return state;
+		case SearchCommands.SetLocations:
+			if (data) {
+				state.locations = data;
+			}
+			break;
+		case SearchCommands.SetEpisodes:
+			if (data) {
+				state.episodes = data;
+			}
+			break;
 		default:
 			return state;
 	}
