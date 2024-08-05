@@ -29,9 +29,10 @@
 	--nav-active-link-color: var();*/
 	--button-color: var(--off-white);
 	--button-background-color: var(--teal-5);
+	--button-background-pressed: var(--teal-11);
 	--button-border-color: var(--teal-5);
 	--border-color: var(--teal-5);
-	--border-color-pressed: var(--teal-1);
+	--border-color-pressed: var(--teal-11);
 	--header-footer-background-color: var(--teal-5);
 	--header-footer-color: var(--teal-1);
 	--theme-accent-color: var(--teal-1);
