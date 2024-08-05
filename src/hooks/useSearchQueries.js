@@ -7,15 +7,21 @@ import { filterLocationsQuery } from '../data/filterLocationsQuery';
 import { filterEpisodesQuery } from '../data/filterEpisodesQuery';
 import { SearchCommands } from '../globals/SearchCommands';
 
-export function useSearchQueries(term, setSearch) {
-	const searchDispatch = useSearchStore((state) => state.dispatch);
+export function useSearchQueries() {
 	let currentSearchCommand = useSearchStore(
 		(state) => state.currentSearchCommand
 	);
 	let search = useSearchStore((state) => state.search);
-	search = term;
+	const setSearch = useSearchStore((state) => state.setSearch);
 	const currentPage = useSearchStore((state) => state.currentPage);
 	let currentSearchCategory = useSearchStore((state) => state.searchCategory);
+	const setStoredCharacters = useSearchStore(
+		(state) => state.setStoredCharacters
+	);
+	const setStoredLocations = useSearchStore(
+		(state) => state.setStoredLocations
+	);
+	const setStoredEpisodes = useSearchStore((state) => state.setStoredEpisodes);
 
 	const [getCharacters, { refetch: refetchCharacters }] = useLazyQuery(
 		filterCharactersQuery,
@@ -40,26 +46,17 @@ export function useSearchQueries(term, setSearch) {
 
 	const queryAllCharacters = async () => {
 		const res = await getCharacters({ page: currentPage, name: search });
-		searchDispatch({
-			type: SearchCommands.SetCharacters,
-			data: res.data.characters.results,
-		});
+		setStoredCharacters(res.data.characters.results);
 	};
 
 	const queryAllLocations = async () => {
-		const res = await getLocations({ page: currentPage });
-		searchDispatch({
-			type: SearchCommands.SetLocations,
-			data: res.data.locations.results,
-		});
+		const res = await getLocations({ page: currentPage, name: search });
+		setStoredLocations(res.data.locations.results);
 	};
 
 	const queryAllEpisodes = async () => {
-		const res = await getEpisodes({ page: currentPage });
-		searchDispatch({
-			type: SearchCommands.SetEpisodes,
-			data: res.data.episodes.results,
-		});
+		const res = await getEpisodes({ page: currentPage, name: search });
+		setStoredEpisodes(res.data.episodes.results);
 	};
 
 	const queryAll = () => {
@@ -100,11 +97,6 @@ export function useSearchQueries(term, setSearch) {
 		}
 	};
 
-	const updateSearchTerm = (value) => {
-		search = value;
-		setSearch(search);
-	};
-
 	const changeCategory = (category) => {
 		currentSearchCategory = category;
 		console.log(`changeCategory: ${currentSearchCategory}`);
@@ -143,7 +135,7 @@ export function useSearchQueries(term, setSearch) {
 
 	return {
 		search,
-		updateSearchTerm,
+		setSearch,
 		changeCategory,
 		queryAll,
 		filterAll,

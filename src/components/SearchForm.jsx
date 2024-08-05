@@ -7,12 +7,10 @@ import {
 	SearchField,
 } from 'react-aria-components';
 import { useSearchQueries } from '../hooks/useSearchQueries';
-import { useState } from 'react';
 
 export default function SearchForm() {
-	const [search, setSearch] = useState('');
-	const { updateSearchTerm, changeCategory, queryAll, filterAll } =
-		useSearchQueries(search, setSearch);
+	const { search, setSearch, changeCategory, queryAll, filterAll } =
+		useSearchQueries();
 
 	return (
 		<SearchField role="search" className="search-form">
@@ -47,8 +45,7 @@ export default function SearchForm() {
 					placeholder="Search"
 					value={search}
 					onChange={(e) => {
-						const term = e.target.value;
-						updateSearchTerm(term);
+						setSearch(e.target.value);
 					}}
 				/>
 				<Button

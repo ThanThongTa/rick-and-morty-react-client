@@ -16,6 +16,27 @@ export const useSearchStore = create()(
 		locations: getInitialLocations(),
 		episodes: getInitialEpisodes(),
 		dispatch: (args) => set((state) => searchReducer(state, args)),
+		setStoredCharacters: (newCharacters) => {
+			set((state) => {
+				state.characters = newCharacters;
+				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
+			});
+		},
+		setStoredLocations: (newLocations) =>
+			set((state) => {
+				state.locations = newLocations;
+				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
+			}),
+		setStoredEpisodes: (newEpisodes) =>
+			set((state) => {
+				state.episodes = newEpisodes;
+				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
+			}),
+		setSearch: (newSearch) =>
+			set((state) => {
+				state.search = newSearch;
+				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
+			}),
 	}))
 );
 
