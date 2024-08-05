@@ -4,6 +4,9 @@ import { LocalStorageKeys } from '../globals/LocalStorageKeys';
 import { SearchCategories } from '../globals/SearchCategories';
 import { SearchCommands } from '../globals/SearchCommands';
 
+/* Custom Hook für die Verwendung von Zustand und Immer
+ * speichert den Zustand in LocalStorage und lädt ihn wieder
+ */
 export const useSearchStore = create()(
 	immer((set) => ({
 		search: '',
@@ -16,12 +19,11 @@ export const useSearchStore = create()(
 		locations: getInitialLocations(),
 		episodes: getInitialEpisodes(),
 		dispatch: (args) => set((state) => searchReducer(state, args)),
-		setStoredCharacters: (newCharacters) => {
+		setStoredCharacters: (newCharacters) =>
 			set((state) => {
 				state.characters = newCharacters;
 				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
-			});
-		},
+			}),
 		setStoredLocations: (newLocations) =>
 			set((state) => {
 				state.locations = newLocations;
@@ -40,6 +42,8 @@ export const useSearchStore = create()(
 	}))
 );
 
+/* Lädt die gespeicherten Characters aus dem LocalStorage
+ */
 function getInitialCharacters() {
 	try {
 		const search = JSON.parse(
@@ -52,6 +56,8 @@ function getInitialCharacters() {
 	}
 }
 
+/* Lädt die gespeicherten Locations aus dem LocalStorage
+ */
 function getInitialLocations() {
 	try {
 		const search = JSON.parse(
@@ -64,6 +70,8 @@ function getInitialLocations() {
 	}
 }
 
+/* Lädt die gespeicherten Episodes aus dem LocalStorage
+ */
 function getInitialEpisodes() {
 	try {
 		const search = JSON.parse(
@@ -76,6 +84,8 @@ function getInitialEpisodes() {
 	}
 }
 
+/* Reducer für die Zustandsaenderung
+ */
 function searchReducer(state, { type, data }) {
 	switch (type) {
 		case SearchCommands.GetAllCharacters:
@@ -94,7 +104,6 @@ function searchReducer(state, { type, data }) {
 				state.search = data.search;
 				state.count = data.characters.info.count;
 				state.pages = data.characters.info.pages;
-				// state.characters = data.characters.results;
 				state.currentPage = data.page;
 				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
 			}

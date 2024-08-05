@@ -7,22 +7,29 @@ import { filterLocationsQuery } from '../data/filterLocationsQuery';
 import { filterEpisodesQuery } from '../data/filterEpisodesQuery';
 import { SearchCommands } from '../globals/SearchCommands';
 
+/* Custom Hook für die Verwendung des Apollo Clients
+ * verwendet den Hook für den Zustand als State Manager
+ */
 export function useSearchQueries() {
-	let currentSearchCommand = useSearchStore(
-		(state) => state.currentSearchCommand
-	);
-	let search = useSearchStore((state) => state.search);
+	/* Funktionen für den Zustand */
 	const setSearch = useSearchStore((state) => state.setSearch);
-	const currentPage = useSearchStore((state) => state.currentPage);
-	let currentSearchCategory = useSearchStore((state) => state.searchCategory);
+	const setStoredEpisodes = useSearchStore((state) => state.setStoredEpisodes);
 	const setStoredCharacters = useSearchStore(
 		(state) => state.setStoredCharacters
 	);
 	const setStoredLocations = useSearchStore(
 		(state) => state.setStoredLocations
 	);
-	const setStoredEpisodes = useSearchStore((state) => state.setStoredEpisodes);
 
+	/* Diese Werte werden im Hook geändert */
+	let search = useSearchStore((state) => state.search);
+	let currentPage = useSearchStore((state) => state.currentPage);
+	let currentSearchCategory = useSearchStore((state) => state.searchCategory);
+	let currentSearchCommand = useSearchStore(
+		(state) => state.currentSearchCommand
+	);
+
+	/* LazyLoading der Queries */
 	const [getCharacters, { refetch: refetchCharacters }] = useLazyQuery(
 		filterCharactersQuery,
 		{
@@ -44,6 +51,7 @@ export function useSearchQueries() {
 		}
 	);
 
+	/* Lädt die Lazy Queries und speichert die Werte im Zustand */
 	const queryAllCharacters = async () => {
 		const res = await getCharacters({ page: currentPage, name: search });
 		setStoredCharacters(res.data.characters.results);
@@ -59,6 +67,7 @@ export function useSearchQueries() {
 		setStoredEpisodes(res.data.episodes.results);
 	};
 
+	/* schaut in den currentSearchCategory und lädt dann die entsprechende Query */
 	const queryAll = () => {
 		console.log(`queryAll: ${currentSearchCategory}`);
 		switch (currentSearchCategory) {
@@ -76,6 +85,7 @@ export function useSearchQueries() {
 		}
 	};
 
+	/* schaut in die currentSearchCategory und filtert dann die entsprechende Query */
 	const filterAll = () => {
 		console.log(`filterAll: ${currentSearchCategory}`);
 		switch (currentSearchCategory) {
@@ -97,11 +107,19 @@ export function useSearchQueries() {
 		}
 	};
 
+	/* Ändert den currentSearchCategory */
 	const changeCategory = (category) => {
 		currentSearchCategory = category;
 		console.log(`changeCategory: ${currentSearchCategory}`);
 	};
 
+	/* Ändert den currentPage */
+	const changePage = (page) => {
+		currentPage = page;
+		console.log(`changePage: ${currentPage}`);
+	};
+
+	/* Effekt wird aufgerufen, wenn sich etwas in der Suche ändert */
 	useEffect(() => {
 		switch (currentSearchCommand) {
 			case SearchCommands.FilterCharacters:
@@ -137,6 +155,7 @@ export function useSearchQueries() {
 		search,
 		setSearch,
 		changeCategory,
+		changePage,
 		queryAll,
 		filterAll,
 	};
