@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const filterCharactersQuery = gql`
-	query getFilteredCharacters($page: Int, $name: String) {
+	query ($page: Int, $name: String) {
 		characters(page: $page, filter: { name: $name }) {
 			info {
 				count
@@ -29,12 +29,6 @@ export const filterCharactersQuery = gql`
 					episode
 				}
 			}
-		}
-		location(id: 1) {
-			id
-		}
-		episodesByIds(ids: [1, 2]) {
-			id
 		}
 	}
 `;
