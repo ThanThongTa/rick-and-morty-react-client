@@ -88,18 +88,20 @@ export function useSearchQueries() {
 	/* schaut in die currentSearchCategory und filtert dann die entsprechende Query */
 	const filterAll = () => {
 		console.log(`filterAll: ${currentSearchCategory}`);
+		const term = document.querySelector('.search-input').value;
+		if (term.length < 2) return;
 		switch (currentSearchCategory) {
 			case SearchCategories.Characters:
 				currentSearchCommand = SearchCommands.FilterCharacters;
-				search = document.querySelector('.search-input').value;
+				search = term;
 				break;
 			case SearchCategories.Locations:
 				currentSearchCommand = SearchCommands.FilterLocations;
-				search = document.querySelector('.search-input').value;
+				search = term;
 				break;
 			case SearchCategories.Episodes:
 				currentSearchCommand = SearchCommands.FilterEpisodes;
-				search = document.querySelector('.search-input').value;
+				search = term;
 				break;
 			default:
 				console.log(currentSearchCategory);

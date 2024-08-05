@@ -1,8 +1,10 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-import { Heading } from 'react-aria-components';
-import SearchForm from './SearchForm';
+import { Heading, SearchField } from 'react-aria-components';
 import SearchResult from './SearchResult';
+import SearchInput from './SearchInput';
+import SearchCategories from './SearchCategories';
 
+/* Die oberste Komponente unserer App */
 export default function SearchClient() {
 	const client = new ApolloClient({
 		uri: 'https://rickandmortyapi.com/graphql/',
@@ -15,7 +17,10 @@ export default function SearchClient() {
 				Rick and Morty DB
 			</Heading>
 			<ApolloProvider client={client}>
-				<SearchForm />
+				<SearchField role="search" className="search-form">
+					<SearchCategories />
+					<SearchInput />
+				</SearchField>
 				<SearchResult />
 			</ApolloProvider>
 		</>
