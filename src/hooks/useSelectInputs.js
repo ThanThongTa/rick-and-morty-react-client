@@ -6,7 +6,7 @@ import { useSearchCategoryStore } from './useSearchCategoryStore';
 
 /* Custom Hook für die Verwendung des Apollo Clients
  * verwendet den Hook für den Zustand als State Manager */
-export function useSearchCategoryQueries() {
+export function useSelectInputs() {
 	/* Funktionen für den Zustand */
 
 	/* Werte aus dem Zustand */

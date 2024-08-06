@@ -1,10 +1,9 @@
 import { Button, Input, Label } from 'react-aria-components';
-import { useSearchCategoryQueries } from '../hooks/useSelectInputs';
+import { useSelectInputs } from '../hooks/useSelectInputs';
 
 /* Komponente für die Eingabe des Suchbegriffs */
 export default function SearchInput() {
-	const { getSearchTerm, updateSearchTerm, query, filter } =
-		useSearchCategoryQueries();
+	const { getSearchTerm, updateSearchTerm, query, filter } = useSelectInputs();
 
 	return (
 		<section className="search-inputs search-parameters-section">

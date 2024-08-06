@@ -18,12 +18,6 @@ export function useSearchCategoryQueries() {
 		(state) => state.searchCategory
 	);
 
-	/* Lokale Werte, um zu ermitteln, welche aktuell
-	 * zurück gegeben werden sollen, abhängig von der
-	 * aktuell ausgewählten Kategorie */
-	let pages = 0;
-	let count = 0;
-	let currentPage = 0;
 	/* Rule of Hooks, jeder Hook muss immer geladen werden
 	 * keine Conditionals erlaubt */
 	const LocPages = useLocationsStore((state) => state.pages);
@@ -35,6 +29,13 @@ export function useSearchCategoryQueries() {
 	const CharPages = useCharactersStore((state) => state.pages);
 	const CharCount = useCharactersStore((state) => state.count);
 	const CharCurrentPage = useCharactersStore((state) => state.currentPage);
+
+	/* Lokale Werte, um zu ermitteln, welche aktuell
+	 * zurück gegeben werden sollen, abhängig von der
+	 * aktuell ausgewählten Kategorie */
+	let pages = 0;
+	let count = 0;
+	let currentPage = 0;
 	/* conditional, um zu ermitteln, welche aktuell relevant sind */
 	switch (currentSearchCategory) {
 		case SearchCategories.Characters:
@@ -55,11 +56,18 @@ export function useSearchCategoryQueries() {
 		default:
 			break;
 	}
+
 	/* Funktion zum Ändern der Kategorie */
 	const changeCategory = (category) => {
 		setSearchCategory(category);
 		console.log(`changeCategory: ${category}`);
 	};
 
-	return { currentSearchCategory, changeCategory, pages, count, currentPage };
+	return {
+		currentSearchCategory,
+		changeCategory,
+		pages,
+		count,
+		currentPage,
+	};
 }
