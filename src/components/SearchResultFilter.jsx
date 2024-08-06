@@ -1,17 +1,24 @@
 /* Komponente für die Anzeige der Filter für die Suchergebnisse */
+import { useSearchStore } from '../hooks/useSearchStore';
+import { SearchCategories } from '../globals/SearchCategories';
+import CharacterResultFilters from './CharacterResultFilters';
+import LocationResultFilters from './LocationResultFilters';
+
 export default function SearchResultFilter() {
+	const searchCategory = useSearchStore((state) => state.searchCategory);
+
+	//Strategy für Filter nach Kategorien
 	return (
 		<section className="search-results__filters search-results__section">
-			Filters for the search depending on the category <br />
-			Characters: name, status, species, type, gender <br />
-			status: alive, dead, unknown <br />
-			gender: female, male, genderless, unknown <br />
-			Locations: name, type, dimension <br />
-			Episodes: name, episode
+			{searchCategory === SearchCategories.Characters && (
+				<CharacterResultFilters />
+			)}
+			{searchCategory === SearchCategories.Episodes &&
+				` Episodes: No special filters for episodes `}
+			{searchCategory === SearchCategories.Locations && (
+				<LocationResultFilters />
+			)}
 			<br />
-			Immer und Zustand für State, searchterm und category, currentpage
-			<br />
-			name as search, Filter as TagGroup, species, type as ListBox
 		</section>
 	);
 }

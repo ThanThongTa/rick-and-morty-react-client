@@ -1,17 +1,22 @@
 /* Komponente für die Anzeige von Details der Suchergebnisse */
+import { useSearchStore } from '../hooks/useSearchStore';
+import { SearchCategories } from '../globals/SearchCategories';
+import CharacterResultDetails from './CharacterResultDetails';
+import LocationResultDetails from './LocationResultDetails';
+import EpisodeResultDetails from './EpisodeResultDetails';
+
 export default function SearchResultDetails() {
+	const searchCategory = useSearchStore((state) => state.searchCategory);
+
 	return (
 		<section className="search-results__details search-results__section">
-			details of one selected result <br />
-			Characters: image url, name, status, species, type, gender, origin,
-			location, episode <br />
-			Location: name, type, dimension, residents <br />
-			Episodes: name, air date, episode, characters
-			<br />
-			Hooks: useButton, useListBox, useTagGroup, useRadioGroup, useSearchField,
-			useTextField, useProgressBar, (useToggleButton)
-			<br />
-			useFocusVisible, usePress
+			{searchCategory === SearchCategories.Characters && (
+				<CharacterResultDetails />
+			)}
+			{searchCategory === SearchCategories.Locations && (
+				<LocationResultDetails />
+			)}
+			{searchCategory === SearchCategories.Episodes && <EpisodeResultDetails />}
 		</section>
 	);
 }

@@ -5,6 +5,8 @@ export default function SearchResultInfo() {
 			Info about the search results, pages, count(, prev, next)
 			<br />
 			ProgressBar
+			<br />
+			Pagination
 		</section>
 	);
 }
