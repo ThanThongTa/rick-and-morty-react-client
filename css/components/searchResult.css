@@ -3,44 +3,35 @@
 	flex-wrap: wrap;
 	gap: 1rem;
 	justify-content: center;
-	margin: auto;
-	width: var(--max-width-s);
+	margin-inline: auto;
+	margin-block-start: 1rem;
+	width: var(---max-width-s);
+}
+
+.search-results__section {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	width: var(--half-width-s, calc(var(--max-width-s) / 2));
+	border: 1px solid var(--section-border-color, var(--border-color));
 }
 
 .search-results__filters {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 1rem;
-	width: var(--max-width-s);
-	border: 1px solid yellow;
+	--section-border-color: yellow;
 }
 
 .search-results__info {
-	display: flex;
-	width: var(--max-width-s);
-	border: 1px solid greenyellow;
+	--section-border-color: greenyellow;
 }
 
 .search-results__list {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 1rem;
-	width: var(--max-width-s);
-	border: 1px solid red;
+	--section-border-color: red;
 }
 
 .search-results__images {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 1rem;
-	width: var(--max-width-s);
-	border: 1px solid blue;
+	--section-border-color: blue;
 }
 
 .search-results__details {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 1rem;
-	width: var(--max-width-s);
-	border: 1px solid orange;
+	--section-border-color: orange;
 }

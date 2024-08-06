@@ -1,7 +1,7 @@
 /* Komponente für die Anzeige von Details der Suchergebnisse */
 export default function SearchResultDetails() {
 	return (
-		<section className="search-results__details">
+		<section className="search-results__details search-results__section">
 			details of one selected result <br />
 			Characters: image url, name, status, species, type, gender, origin,
 			location, episode <br />

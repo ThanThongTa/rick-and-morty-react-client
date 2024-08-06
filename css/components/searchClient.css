@@ -14,17 +14,10 @@
 	margin-block-start: 1em;
 	width: var(--max-width-s);
 
-	.search-categories {
+	.search-parameters-section {
 		display: flex;
-		margin-inline: auto;
 		gap: 1rem;
-		color: var(--text-color);
-	}
-
-	.search-inputs {
-		display: flex;
 		margin-inline: auto;
-		gap: 1rem;
 	}
 
 	.search-input {

@@ -15,7 +15,7 @@ export default function SearchInput() {
 	}, [debouncedSearchTerm, filterAll]);
 
 	return (
-		<section className="search-inputs">
+		<section className="search-inputs search-parameters-section">
 			<Label className="Search Input">Search Input</Label>
 			<Button
 				aria-label="Show all"

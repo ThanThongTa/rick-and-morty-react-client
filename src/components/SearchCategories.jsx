@@ -7,7 +7,7 @@ export default function SearchCategories() {
 
 	return (
 		<RadioGroup
-			className="search-categories"
+			className="search-categories search-parameters-section"
 			defaultValue={'characters'}
 			onChange={(value) => changeCategory(value)}
 		>

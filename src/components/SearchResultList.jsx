@@ -1,7 +1,7 @@
 /* Komponente für die Anzeige der Suchergebnisse als Liste */
 export default function SearchResultList() {
 	return (
-		<section className="search-results__list">
+		<section className="search-results__list search-results__section">
 			Listbox of search results
 			<br />
 			Infinite scrolling list for characters
