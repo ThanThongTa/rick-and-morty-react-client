@@ -10,6 +10,13 @@ export default function SearchResultImages() {
 	const setSelected = useSearchStore(
 		(state) => state.setCurrentlySelectedCharacter
 	);
+	const selectedLocationId = useSearchStore(
+		(state) => state.currentlySelectedLocation
+	);
+	const locations = useSearchStore((state) => state.locations);
+	const selectedLocation = locations.find(
+		(location) => location.id === selectedLocationId
+	);
 	const { hasResults } = useSearchQueries();
 	//Visitor für GetImages
 	return (
@@ -32,7 +39,17 @@ export default function SearchResultImages() {
 							</Button>
 						))}
 					{searchCategory === SearchCategories.Locations &&
-						'Listbox of images of residents of selected location '}
+						selectedLocation &&
+						selectedLocation.residents &&
+						selectedLocation.residents.map((character) => (
+							<img
+								key={character.id}
+								src={character.image}
+								alt={character.name}
+								width={40}
+								height={40}
+							/>
+						))}
 					{searchCategory === SearchCategories.Episodes &&
 						'Listbox of images of characters in selected episode'}
 				</section>

@@ -1,8 +1,11 @@
 import { gql } from '@apollo/client';
 
 export const filterLocationsQuery = gql`
-	query ($page: Int, $name: String) {
-		locations(page: $page, filter: { name: $name }) {
+	query ($page: Int, $name: String, $type: String, $dimension: String) {
+		locations(
+			page: $page
+			filter: { name: $name, type: $type, dimension: $dimension }
+		) {
 			info {
 				count
 				pages
@@ -13,6 +16,7 @@ export const filterLocationsQuery = gql`
 				type
 				dimension
 				residents {
+					id
 					name
 					status
 					species

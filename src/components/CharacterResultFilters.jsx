@@ -21,7 +21,9 @@ export default function CharacterResultFilters() {
 	const selectedStatus = useSearchStore(
 		(state) => state.currentlySelectedStatus
 	);
-	const selectedType = useSearchStore((state) => state.currentlySelectedType);
+	const selectedType = useSearchStore(
+		(state) => state.currentlySelectedCharacterType
+	);
 	const selectedSpecies = useSearchStore(
 		(state) => state.currentlySelectedSpecies
 	);
@@ -35,7 +37,7 @@ export default function CharacterResultFilters() {
 		(state) => state.setCurrentlySelectedSpecies
 	);
 	const setSelectedType = useSearchStore(
-		(state) => state.setCurrentlySelectedType
+		(state) => state.setCurrentlySelectedCharacterType
 	);
 
 	const changeSelectedGender = (newSelectedGender) => {

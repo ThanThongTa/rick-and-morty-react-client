@@ -17,9 +17,13 @@ export const useSearchStore = create()(
 		currentSearchCommand: getInitialCurrentSearchCommand(),
 		currentlySelectedCharacter: getInitialCurrentlySelectedCharacter(),
 		currentlySelectedSpecies: getInitialCurrentlySelectedSpecies(),
-		currentlySelectedType: getInitialCurrentlySelectedType(),
+		currentlySelectedLocationType: getInitialCurrentlySelectedLocationType(),
+		currentlySelectedCharacterType: getInitialCurrentlySelectedCharacterType(),
 		currentlySelectedGender: getInitialCurrentlySelectedGender(),
 		currentlySelectedStatus: getInitialCurrentlySelectedStatus(),
+		currentlySelectedEpisode: getInitialCurrentlySelectedEpisode(),
+		currentlySelectedLocation: getInitialCurrentlySelectedLocation(),
+		currentlySelectedDimension: getInitialCurrentlySelectedDimension(),
 		characters: getInitialCharacters(),
 		locations: getInitialLocations(),
 		episodes: getInitialEpisodes(),
@@ -79,9 +83,14 @@ export const useSearchStore = create()(
 				state.currentlySelectedSpecies = newCurrentlySelectedSpecies;
 				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
 			}),
-		setCurrentlySelectedType: (newCurrentlySelectedType) =>
+		setCurrentlySelectedCharacterType: (newCurrentlySelectedType) =>
 			set((state) => {
-				state.currentlySelectedType = newCurrentlySelectedType;
+				state.currentlySelectedCharacterType = newCurrentlySelectedType;
+				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
+			}),
+		setCurrentlySelectedLocationType: (newCurrentlySelectedType) =>
+			set((state) => {
+				state.currentlySelectedLocationType = newCurrentlySelectedType;
 				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
 			}),
 		setCurrentlySelectedGender: (newCurrentlySelectedGender) =>
@@ -92,6 +101,21 @@ export const useSearchStore = create()(
 		setCurrentlySelectedStatus: (newCurrentlySelectedStatus) =>
 			set((state) => {
 				state.currentlySelectedStatus = newCurrentlySelectedStatus;
+				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
+			}),
+		setCurrentlySelectedEpisode: (newCurrentlySelectedEpisode) =>
+			set((state) => {
+				state.currentlySelectedEpisode = newCurrentlySelectedEpisode;
+				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
+			}),
+		setCurrentlySelectedLocation: (newCurrentlySelectedLocation) =>
+			set((state) => {
+				state.currentlySelectedLocation = newCurrentlySelectedLocation;
+				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
+			}),
+		setCurrentlySelectedDimension: (newCurrentlySelectedDimension) =>
+			set((state) => {
+				state.currentlySelectedDimension = newCurrentlySelectedDimension;
 				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
 			}),
 	}))
@@ -235,12 +259,23 @@ function getInitialCurrentlySelectedSpecies() {
 	}
 }
 
-function getInitialCurrentlySelectedType() {
+function getInitialCurrentlySelectedLocationType() {
 	try {
 		const search = JSON.parse(
 			localStorage.getItem(LocalStorageKeys.Search) || '[]'
 		);
-		return search.currentlySelectedType ?? 'all';
+		return search.currentlySelectedLocationType ?? 'all';
+	} catch (error) {
+		console.log(error);
+		return null;
+	}
+}
+function getInitialCurrentlySelectedCharacterType() {
+	try {
+		const search = JSON.parse(
+			localStorage.getItem(LocalStorageKeys.Search) || '[]'
+		);
+		return search.currentlySelectedCharacterType ?? 'all';
 	} catch (error) {
 		console.log(error);
 		return null;
@@ -268,6 +303,42 @@ function getInitialCurrentlySelectedStatus() {
 	} catch (error) {
 		console.log(error);
 		return null;
+	}
+}
+
+function getInitialCurrentlySelectedLocation() {
+	try {
+		const search = JSON.parse(
+			localStorage.getItem(LocalStorageKeys.Search) || '[]'
+		);
+		return search.currentlySelectedLocation ?? null;
+	} catch (error) {
+		console.log(error);
+		return null;
+	}
+}
+
+function getInitialCurrentlySelectedEpisode() {
+	try {
+		const search = JSON.parse(
+			localStorage.getItem(LocalStorageKeys.Search) || '[]'
+		);
+		return search.currentlySelectedEpisode ?? null;
+	} catch (error) {
+		console.log(error);
+		return null;
+	}
+}
+
+function getInitialCurrentlySelectedDimension() {
+	try {
+		const search = JSON.parse(
+			localStorage.getItem(LocalStorageKeys.Search) || '[]'
+		);
+		return search.currentlySelectedDimension ?? 'all';
+	} catch (error) {
+		console.log(error);
+		return 'all';
 	}
 }
 

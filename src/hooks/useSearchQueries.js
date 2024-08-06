@@ -22,8 +22,14 @@ export function useSearchQueries() {
 	const setCurrentPage = useSearchStore((state) => state.setCurrentPage);
 	const status = useSearchStore((state) => state.currentlySelectedStatus);
 	const species = useSearchStore((state) => state.currentlySelectedSpecies);
-	const type = useSearchStore((state) => state.currentlySelectedType);
+	const characterType = useSearchStore(
+		(state) => state.currentlySelectedCharacterType
+	);
+	const locationType = useSearchStore(
+		(state) => state.currentlySelectedLocationType
+	);
 	const gender = useSearchStore((state) => state.currentlySelectedGender);
+	const dimension = useSearchStore((state) => state.currentlySelectedDimension);
 
 	const setStoredCharacters = useSearchStore(
 		(state) => state.setStoredCharacters
@@ -44,7 +50,11 @@ export function useSearchQueries() {
 
 	useEffect(() => {
 		saveFetchedCharacters();
-	}, [search, status, species, type, gender]);
+	}, [search, status, species, characterType, gender]);
+
+	useEffect(() => {
+		saveFetchedLocations();
+	}, [search, locationType, dimension]);
 
 	const saveFetchedCharacters = async function () {
 		const res = await refetchCharacters({
@@ -52,13 +62,26 @@ export function useSearchQueries() {
 			name: search,
 			status: status === 'all' ? null : status,
 			species: species === 'all' ? null : species,
-			type: type === 'all' ? null : type,
+			type: characterType === 'all' ? null : characterType,
 			gender: gender === 'all' ? null : gender,
 		});
 		setStoredCharacters(res.data.characters.results);
 		setCurrentPage(currentPage);
 		setCount(res.data.characters.info.count);
 		setPages(res.data.characters.info.pages);
+	};
+
+	const saveFetchedLocations = async function () {
+		const res = await refetchLocations({
+			page: currentPage,
+			name: search,
+			type: locationType === 'all' ? null : locationType,
+			dimension: dimension === 'all' ? null : dimension,
+		});
+		setStoredLocations(res.data.locations.results);
+		setCurrentPage(currentPage);
+		setCount(res.data.locations.info.count);
+		setPages(res.data.locations.info.pages);
 	};
 
 	/* LazyLoading der Queries */
@@ -70,13 +93,18 @@ export function useSearchQueries() {
 				name: search ?? null,
 				status: status === 'all' ? null : status,
 				species: species === 'all' ? null : species,
-				type: type === 'all' ? null : type,
+				type: characterType === 'all' ? null : characterType,
 				gender: gender === 'all' ? null : gender,
 			},
 		}
 	);
 	const [, { refetch: refetchLocations }] = useLazyQuery(filterLocationsQuery, {
-		variables: { page: currentPage, name: search },
+		variables: {
+			page: currentPage,
+			name: search,
+			type: locationType === 'all' ? null : locationType,
+			dimension: dimension === 'all' ? null : dimension,
+		},
 	});
 
 	const [, { refetch: refetchEpisodes }] = useLazyQuery(filterEpisodesQuery, {
