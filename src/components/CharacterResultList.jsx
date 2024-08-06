@@ -1,6 +1,5 @@
 import { Heading, ListBox, ListBoxItem } from 'react-aria-components';
 import { useSearchStore } from '../hooks/useSearchStore';
-import { useState } from 'react';
 
 export default function CharacterResultList() {
 	const characters = useSearchStore((state) => state.characters);
@@ -8,7 +7,9 @@ export default function CharacterResultList() {
 		(state) => state.setCurrentlySelectedCharacter
 	);
 
-	const [selected] = useState([]);
+	const changeSelected = (event) => {
+		setSelected(event.currentKey);
+	};
 
 	//Infinite vertical scrolling list for characters
 	return (
@@ -24,20 +25,18 @@ export default function CharacterResultList() {
 							<ListBox
 								aria-label="Characters List"
 								selectionMode="single"
-								selectedKeys={selected}
-								onSelectionChange={setSelected}
+								onSelectionChange={changeSelected}
 							>
 								{characters.map((character) => (
 									<ListBoxItem
-										key={character.id + character.name}
+										key={character.id}
 										textValue={character.name}
-										id={character}
+										id={character.id}
 									>
 										{character.name}
 									</ListBoxItem>
 								))}
 							</ListBox>
-							<p>Current selection: {[...selected].join(', ')}</p>
 						</>
 					)}
 				</section>
