@@ -1,57 +1,34 @@
-import { useSearchStore } from './useSearchStore';
-import { SearchCategories } from '../globals/SearchCategories';
 import { useLazyQuery } from '@apollo/client';
 import { filterCharactersQuery } from '../data/filterCharactersQuery';
-import { filterLocationsQuery } from '../data/filterLocationsQuery';
-import { filterEpisodesQuery } from '../data/filterEpisodesQuery';
-import { SearchCommands } from '../globals/SearchCommands';
 import { useEffect } from 'react';
+import { useCharactersStore } from '../hooks/useCharactersStore';
 
 /* Custom Hook für die Verwendung des Apollo Clients
  * verwendet den Hook für den Zustand als State Manager
  */
-export function useSearchQueries() {
+export function useCharactersQueries() {
 	/* Funktionen für den Zustand */
-	const setSearch = useSearchStore((state) => state.setSearch);
-	const setSearchCategory = useSearchStore((state) => state.setSearchCategory);
-	const setPages = useSearchStore((state) => state.setPages);
-	const setCount = useSearchStore((state) => state.setCount);
-	const currentSearchCategory = useSearchStore((state) => state.searchCategory);
-	const search = useSearchStore((state) => state.search);
-	const setCurrentPage = useSearchStore((state) => state.setCurrentPage);
-	const status = useSearchStore((state) => state.currentlySelectedStatus);
-	const species = useSearchStore((state) => state.currentlySelectedSpecies);
-	const type = useSearchStore((state) => state.currentlySelectedCharacterType);
-	const gender = useSearchStore((state) => state.currentlySelectedGender);
+	const setSearch = useCharactersStore((state) => state.setSearch);
+	const setPages = useCharactersStore((state) => state.setPages);
+	const setCount = useCharactersStore((state) => state.setCount);
+	const search = useCharactersStore((state) => state.search);
+	const setCurrentPage = useCharactersStore((state) => state.setCurrentPage);
+	const status = useCharactersStore((state) => state.currentlySelectedStatus);
+	const species = useCharactersStore((state) => state.currentlySelectedSpecies);
+	const type = useCharactersStore((state) => state.currentlySelectedType);
+	const gender = useCharactersStore((state) => state.currentlySelectedGender);
 
-	const setStoredCharacters = useSearchStore(
+	const setStoredCharacters = useCharactersStore(
 		(state) => state.setStoredCharacters
 	);
-	const setStoredLocations = useSearchStore(
-		(state) => state.setStoredLocations
-	);
-	const setCurrentSearchCommand = useSearchStore(
-		(state) => state.setCurrentSearchCommand
-	);
-
-	const characters = useSearchStore((state) => state.characters);
-	const locations = useSearchStore((state) => state.locations);
-	const episodes = useSearchStore((state) => state.episodes);
+	const characters = useCharactersStore((state) => state.characters);
 
 	/* Diese Werte werden im Hook geändert */
-	let currentPage = useSearchStore((state) => state.currentPage);
+	let currentPage = useCharactersStore((state) => state.currentPage);
 
 	useEffect(() => {
 		saveFetchedCharacters();
-	}, [search, status, species, characterType, gender]);
-
-	useEffect(() => {
-		saveFetchedLocations();
-	}, [search, locationType, dimension]);
-
-	useEffect(() => {
-		saveFetchedEpisodes();
-	}, [search]);
+	}, [search, status, species, type, gender]);
 
 	const saveFetchedCharacters = async function () {
 		const res = await refetchCharacters({
@@ -59,37 +36,13 @@ export function useSearchQueries() {
 			name: search,
 			status: status === 'all' ? null : status,
 			species: species === 'all' ? null : species,
-			type: characterType === 'all' ? null : characterType,
+			type: type === 'all' ? null : type,
 			gender: gender === 'all' ? null : gender,
 		});
 		setStoredCharacters(res.data.characters.results);
 		setCurrentPage(currentPage);
 		setCount(res.data.characters.info.count);
 		setPages(res.data.characters.info.pages);
-	};
-
-	const saveFetchedLocations = async function () {
-		const res = await refetchLocations({
-			page: currentPage,
-			name: search,
-			type: locationType === 'all' ? null : locationType,
-			dimension: dimension === 'all' ? null : dimension,
-		});
-		setStoredLocations(res.data.locations.results);
-		setCurrentPage(currentPage);
-		setCount(res.data.locations.info.count);
-		setPages(res.data.locations.info.pages);
-	};
-
-	const saveFetchedEpisodes = async function () {
-		const res = await refetchEpisodes({
-			page: currentPage,
-			name: search,
-		});
-		setStoredEpisodes(res.data.episodes.results);
-		setCurrentPage(currentPage);
-		setCount(res.data.episodes.info.count);
-		setPages(res.data.episodes.info.pages);
 	};
 
 	/* LazyLoading der Queries */
@@ -101,23 +54,11 @@ export function useSearchQueries() {
 				name: search ?? null,
 				status: status === 'all' ? null : status,
 				species: species === 'all' ? null : species,
-				type: characterType === 'all' ? null : characterType,
+				type: type === 'all' ? null : type,
 				gender: gender === 'all' ? null : gender,
 			},
 		}
 	);
-	const [, { refetch: refetchLocations }] = useLazyQuery(filterLocationsQuery, {
-		variables: {
-			page: currentPage,
-			name: search,
-			type: locationType === 'all' ? null : locationType,
-			dimension: dimension === 'all' ? null : dimension,
-		},
-	});
-
-	const [, { refetch: refetchEpisodes }] = useLazyQuery(filterEpisodesQuery, {
-		variables: { page: currentPage, name: search },
-	});
 
 	/* Lädt die Lazy Queries und speichert die Werte im Zustand */
 	const queryAllCharacters = async () => {
@@ -127,97 +68,23 @@ export function useSearchQueries() {
 		setCount(res.data.characters.info.count);
 		setPages(res.data.characters.info.pages);
 	};
-	const queryAllLocations = async () => {
-		const res = await refetchLocations({ page: currentPage });
-		setStoredLocations(res.data.locations.results);
-		setCurrentPage(currentPage);
-		setCount(res.data.locations.info.count);
-		setPages(res.data.locations.info.pages);
-	};
-	const queryAllEpisodes = async () => {
-		const res = await refetchEpisodes({ page: currentPage });
-		setStoredEpisodes(res.data.episodes.results);
-		setCurrentPage(currentPage);
-		setCount(res.data.episodes.info.count);
-		setPages(res.data.episodes.info.pages);
-	};
 
 	const queryFilterCharacters = async () => {
 		const res = await refetchCharacters({ page: currentPage, name: search });
 		setStoredCharacters(res.data.characters.results);
 	};
-	const queryFilterLocations = async () => {
-		const res = await refetchLocations({ page: currentPage, name: search });
-		setStoredLocations(res.data.locations.results);
-	};
-	const queryFilterEpisodes = async () => {
-		const res = await refetchEpisodes({ page: currentPage, name: search });
-		setStoredEpisodes(res.data.episodes.results);
-	};
-
-	/* schaut in den currentSearchCategory und lädt dann die entsprechende Query */
-	const queryAll = () => {
-		console.log(`queryAll: ${currentSearchCategory}`);
-		switch (currentSearchCategory) {
-			case SearchCategories.Characters:
-				queryAllCharacters();
-				break;
-			case SearchCategories.Locations:
-				queryAllLocations();
-				break;
-			case SearchCategories.Episodes:
-				queryAllEpisodes();
-				break;
-			default:
-				break;
-		}
-	};
 
 	/* schaut in die currentSearchCategory und filtert dann die entsprechende Query */
-	const filterAll = () => {
-		console.log(`filterAll: ${currentSearchCategory}`);
+	const filterCharacters = () => {
+		console.log(`filterCharacters`);
 		const term = document.querySelector('.search-input').value;
 		if (term.length < 2 && !species && !status && !type && !gender) return;
-		switch (currentSearchCategory) {
-			case SearchCategories.Characters: {
-				setCurrentSearchCommand(SearchCommands.FilterCharacters);
-				setSearch(term);
-				queryFilterCharacters();
-				break;
-			}
-			case SearchCategories.Locations:
-				setCurrentSearchCommand(SearchCommands.FilterLocations);
-				setSearch(term);
-				queryFilterLocations();
-				break;
-			case SearchCategories.Episodes:
-				setCurrentSearchCommand(SearchCommands.FilterEpisodes);
-				setSearch(term);
-				queryFilterEpisodes();
-				break;
-			default:
-				console.log(currentSearchCategory);
-				break;
-		}
+		setSearch(term);
+		queryFilterCharacters();
 	};
 
 	const hasResults = () => {
-		switch (currentSearchCategory) {
-			case SearchCategories.Characters:
-				return characters.length > 0;
-			case SearchCategories.Locations:
-				return locations.length > 0;
-			case SearchCategories.Episodes:
-				return episodes.length > 0;
-			default:
-				return false;
-		}
-	};
-
-	/* Ändert den currentSearchCategory */
-	const changeCategory = (category) => {
-		setSearchCategory(category);
-		console.log(`changeCategory: ${category}`);
+		return characters.length > 0;
 	};
 
 	/* Ändert den currentPage */
@@ -229,10 +96,9 @@ export function useSearchQueries() {
 	return {
 		search,
 		setSearch,
-		changeCategory,
 		changePage,
-		queryAll,
-		filterAll,
+		queryAllCharacters,
+		filterCharacters,
 		hasResults,
 	};
 }

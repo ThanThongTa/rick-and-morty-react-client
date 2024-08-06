@@ -1,9 +1,9 @@
 import { Heading, ListBox, ListBoxItem } from 'react-aria-components';
-import { useSearchStore } from '../hooks/useSearchStore';
+import { useCharactersStore } from '../hooks/useCharactersStore';
 
 export default function CharacterResultList() {
-	const characters = useSearchStore((state) => state.characters);
-	const setSelected = useSearchStore(
+	const characters = useCharactersStore((state) => state.characters);
+	const setSelected = useCharactersStore(
 		(state) => state.setCurrentlySelectedCharacter
 	);
 

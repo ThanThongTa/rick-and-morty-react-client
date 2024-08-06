@@ -8,41 +8,37 @@ import {
 	Select,
 	SelectValue,
 } from 'react-aria-components';
-import { useSearchStore } from '../hooks/useSearchStore';
+import { useCharactersStore } from '../hooks/useCharactersStore';
 
 export default function CharacterResultFilters() {
-	const characters = useSearchStore((state) => state.characters);
+	const characters = useCharactersStore((state) => state.characters);
 	const species = new Set(characters.map((character) => character.species));
 	const types = new Set(characters.map((character) => character.type));
 
-	const selectedGender = useSearchStore(
+	const selectedGender = useCharactersStore(
 		(state) => state.currentlySelectedGender
 	);
-	const selectedStatus = useSearchStore(
+	const selectedStatus = useCharactersStore(
 		(state) => state.currentlySelectedStatus
 	);
-	const selectedType = useSearchStore(
-		(state) => state.currentlySelectedCharacterType
+	const selectedType = useCharactersStore(
+		(state) => state.currentlySelectedType
 	);
-	const selectedSpecies = useSearchStore(
+	const selectedSpecies = useCharactersStore(
 		(state) => state.currentlySelectedSpecies
 	);
-	const setSelectedGender = useSearchStore(
+	const setSelectedGender = useCharactersStore(
 		(state) => state.setCurrentlySelectedGender
 	);
-	const setSelectedStatus = useSearchStore(
+	const setSelectedStatus = useCharactersStore(
 		(state) => state.setCurrentlySelectedStatus
 	);
-	const setSelectedSpecies = useSearchStore(
+	const setSelectedSpecies = useCharactersStore(
 		(state) => state.setCurrentlySelectedSpecies
 	);
-	const setSelectedType = useSearchStore(
-		(state) => state.setCurrentlySelectedCharacterType
+	const setSelectedType = useCharactersStore(
+		(state) => state.setCurrentlySelectedType
 	);
-
-	const changeSelectedGender = (newSelectedGender) => {
-		setSelectedGender(newSelectedGender);
-	};
 
 	return (
 		<div>
@@ -113,7 +109,7 @@ export default function CharacterResultFilters() {
 				</Popover>
 			</Select>
 			<Select
-				onSelectionChange={changeSelectedGender}
+				onSelectionChange={setSelectedGender}
 				selectedKey={selectedGender}
 			>
 				<Label>Gender</Label>

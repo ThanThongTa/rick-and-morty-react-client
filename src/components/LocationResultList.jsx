@@ -1,9 +1,9 @@
 import { Heading, ListBox, ListBoxItem } from 'react-aria-components';
-import { useSearchStore } from '../hooks/useSearchStore';
+import { useLocationsStore } from '../hooks/useLocationsStore';
 
 export default function LocationResultList() {
-	const locations = useSearchStore((state) => state.locations);
-	const setSelected = useSearchStore(
+	const locations = useLocationsStore((state) => state.locations);
+	const setSelected = useLocationsStore(
 		(state) => state.setCurrentlySelectedLocation
 	);
 	const changeSelected = (event) => {

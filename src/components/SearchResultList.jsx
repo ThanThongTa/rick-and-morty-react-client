@@ -1,29 +1,21 @@
-import { useSearchStore } from '../hooks/useSearchStore';
 import { SearchCategories } from '../globals/SearchCategories';
 import CharacterResultList from './CharacterResultList';
 import LocationResultList from './LocationResultList';
 import EpisodeResultList from './EpisodeResultList';
-import { useSearchQueries } from '../hooks/useSearchQueries';
+import { useSearchCategoryStore } from '../hooks/useSearchCategoryStore';
 
 /* Komponente für die Anzeige der Suchergebnisse als Liste */
 export default function SearchResultList() {
-	const searchCategory = useSearchStore((state) => state.searchCategory);
-	const { hasResults } = useSearchQueries();
+	const searchCategory = useSearchCategoryStore(
+		(state) => state.searchCategory
+	);
 	return (
-		<>
-			{hasResults() && (
-				<section className="search-results__list search-results__section">
-					{searchCategory === SearchCategories.Characters && (
-						<CharacterResultList />
-					)}
-					{searchCategory === SearchCategories.Locations && (
-						<LocationResultList />
-					)}
-					{searchCategory === SearchCategories.Episodes && (
-						<EpisodeResultList />
-					)}
-				</section>
+		<section className="search-results__list search-results__section">
+			{searchCategory === SearchCategories.Characters && (
+				<CharacterResultList />
 			)}
-		</>
+			{searchCategory === SearchCategories.Locations && <LocationResultList />}
+			{searchCategory === SearchCategories.Episodes && <EpisodeResultList />}
+		</section>
 	);
 }

@@ -1,11 +1,11 @@
 import { Heading, Label } from 'react-aria-components';
-import { useSearchStore } from '../hooks/useSearchStore';
+import { useCharactersStore } from '../hooks/useCharactersStore';
 
 export default function CharacterResultDetails() {
-	const selectedCharacterId = useSearchStore(
+	const selectedCharacterId = useCharactersStore(
 		(state) => state.currentlySelectedCharacter
 	);
-	const characters = useSearchStore((state) => state.characters);
+	const characters = useCharactersStore((state) => state.characters);
 	const selectedCharacter = characters.find(
 		(character) => character.id === selectedCharacterId
 	);

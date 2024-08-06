@@ -1,11 +1,11 @@
 import { Heading, Label } from 'react-aria-components';
-import { useSearchStore } from '../hooks/useSearchStore';
+import { useLocationsStore } from '../hooks/useLocationsStore';
 
 export default function LocationResultDetails() {
-	const selectedLocationId = useSearchStore(
+	const selectedLocationId = useLocationsStore(
 		(state) => state.currentlySelectedLocation
 	);
-	const locations = useSearchStore((state) => state.locations);
+	const locations = useLocationsStore((state) => state.locations);
 	const selectedLocation = locations.find(
 		(location) => location.id === selectedLocationId
 	);

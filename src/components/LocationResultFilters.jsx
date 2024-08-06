@@ -8,22 +8,22 @@ import {
 	Select,
 	SelectValue,
 } from 'react-aria-components';
-import { useSearchStore } from '../hooks/useSearchStore';
+import { useLocationsStore } from '../hooks/useLocationsStore';
 
 export default function LocationResultFilters() {
-	const locations = useSearchStore((state) => state.locations);
+	const locations = useLocationsStore((state) => state.locations);
 	const types = new Set(locations.map((location) => location.type));
-	const selectedType = useSearchStore(
-		(state) => state.currentlySelectedLocationType
+	const selectedType = useLocationsStore(
+		(state) => state.currentlySelectedType
 	);
-	const setSelectedType = useSearchStore(
-		(state) => state.setCurrentlySelectedLocationType
+	const setSelectedType = useLocationsStore(
+		(state) => state.setCurrentlySelectedType
 	);
 	const dimensions = new Set(locations.map((location) => location.dimension));
-	const selectedDimension = useSearchStore(
+	const selectedDimension = useLocationsStore(
 		(state) => state.currentlySelectedDimension
 	);
-	const setSelectedDimension = useSearchStore(
+	const setSelectedDimension = useLocationsStore(
 		(state) => state.setCurrentlySelectedDimension
 	);
 
