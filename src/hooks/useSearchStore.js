@@ -9,12 +9,12 @@ import { SearchCommands } from '../globals/SearchCommands';
  */
 export const useSearchStore = create()(
 	immer((set) => ({
-		search: '',
-		count: 0,
-		pages: 1,
-		currentPage: 1,
-		searchCategory: SearchCategories.Characters,
-		currentSearchCommand: '',
+		search: getInitialSearch(),
+		count: getInitialCount(),
+		pages: getInitialPages(),
+		currentPage: getInitialPage(),
+		searchCategory: getInitialSearchCategory(),
+		currentSearchCommand: getInitialCurrentSearchCommand(),
 		characters: getInitialCharacters(),
 		locations: getInitialLocations(),
 		episodes: getInitialEpisodes(),
@@ -96,6 +96,78 @@ function getInitialEpisodes() {
 	} catch (error) {
 		console.log(error);
 		return [];
+	}
+}
+
+function getInitialSearch() {
+	try {
+		const search = JSON.parse(
+			localStorage.getItem(LocalStorageKeys.Search) || '[]'
+		);
+		return search.search ?? '';
+	} catch (error) {
+		console.log(error);
+		return '';
+	}
+}
+
+function getInitialPage() {
+	try {
+		const search = JSON.parse(
+			localStorage.getItem(LocalStorageKeys.Search) || '[]'
+		);
+		return search.currentPage ?? 1;
+	} catch (error) {
+		console.log(error);
+		return 1;
+	}
+}
+
+function getInitialCount() {
+	try {
+		const search = JSON.parse(
+			localStorage.getItem(LocalStorageKeys.Search) || '[]'
+		);
+		return search.count ?? 0;
+	} catch (error) {
+		console.log(error);
+		return 0;
+	}
+}
+
+function getInitialPages() {
+	try {
+		const search = JSON.parse(
+			localStorage.getItem(LocalStorageKeys.Search) || '[]'
+		);
+		return search.pages ?? 1;
+	} catch (error) {
+		console.log(error);
+		return 1;
+	}
+}
+
+function getInitialCurrentSearchCommand() {
+	try {
+		const search = JSON.parse(
+			localStorage.getItem(LocalStorageKeys.Search) || '[]'
+		);
+		return search.currentSearchCommand ?? '';
+	} catch (error) {
+		console.log(error);
+		return '';
+	}
+}
+
+function getInitialSearchCategory() {
+	try {
+		const search = JSON.parse(
+			localStorage.getItem(LocalStorageKeys.Search) || '[]'
+		);
+		return search.searchCategory ?? SearchCategories.Characters;
+	} catch (error) {
+		console.log(error);
+		return SearchCategories.Characters;
 	}
 }
 
