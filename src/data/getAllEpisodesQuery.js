@@ -8,6 +8,7 @@ export const allEpisodesQuery = gql`
 				pages
 			}
 			results {
+				id
 				name
 				air_date
 				episode

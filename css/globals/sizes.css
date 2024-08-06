@@ -15,6 +15,8 @@
 	--border-radius-s: 3px;
 	--border-radius-m: 6px;
 	--border-radius-l: 12px;
+
+	--min-width-s: 36rem;
 }
 
 /* Fluide Größen, die vor allem für Margin und Padding geeignet sind. Als Einheit wird hier px statt rem

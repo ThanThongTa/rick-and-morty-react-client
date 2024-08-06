@@ -8,6 +8,7 @@ export const filterLocationsQuery = gql`
 				pages
 			}
 			results {
+				id
 				name
 				type
 				dimension

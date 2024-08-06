@@ -7,14 +7,23 @@ import EpisodeResultList from './EpisodeResultList';
 /* Komponente für die Anzeige der Suchergebnisse als Liste */
 export default function SearchResultList() {
 	const searchCategory = useSearchStore((state) => state.searchCategory);
+	const characters = useSearchStore((state) => state.characters);
 
 	return (
-		<section className="search-results__list search-results__section">
-			{searchCategory === SearchCategories.Characters && (
-				<CharacterResultList />
+		<>
+			{characters && characters.length > 0 && (
+				<section className="search-results__list search-results__section">
+					{searchCategory === SearchCategories.Characters && (
+						<CharacterResultList />
+					)}
+					{searchCategory === SearchCategories.Locations && (
+						<LocationResultList />
+					)}
+					{searchCategory === SearchCategories.Episodes && (
+						<EpisodeResultList />
+					)}
+				</section>
 			)}
-			{searchCategory === SearchCategories.Locations && <LocationResultList />}
-			{searchCategory === SearchCategories.Episodes && <EpisodeResultList />}
-		</section>
+		</>
 	);
 }

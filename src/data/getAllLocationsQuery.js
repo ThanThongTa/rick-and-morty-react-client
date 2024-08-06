@@ -8,6 +8,7 @@ export const allLocationsQuery = gql`
 				pages
 			}
 			results {
+				id
 				name
 				type
 				dimension

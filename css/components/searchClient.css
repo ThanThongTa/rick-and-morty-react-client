@@ -6,18 +6,15 @@
 
 .search-form {
 	display: flex;
-	align-items: center;
 	flex-wrap: wrap;
 	justify-content: center;
 	gap: 1rem;
 	margin-inline: auto;
-	margin-block-start: 1em;
-	width: var(--max-width-s);
+	min-width: var(--min-width-s);
 
 	.search-parameters-section {
 		display: flex;
 		gap: 1rem;
-		margin-inline: auto;
 	}
 
 	.search-input {

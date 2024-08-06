@@ -15,6 +15,7 @@ export const useSearchStore = create()(
 		currentPage: getInitialPage(),
 		searchCategory: getInitialSearchCategory(),
 		currentSearchCommand: getInitialCurrentSearchCommand(),
+		currentlySelectedCharacter: getInitialCurrentlySelectedCharacter(),
 		characters: getInitialCharacters(),
 		locations: getInitialLocations(),
 		episodes: getInitialEpisodes(),
@@ -52,6 +53,21 @@ export const useSearchStore = create()(
 		setCurrentSearchCommand: (newCurrentSearchCommand) =>
 			set((state) => {
 				state.currentSearchCommand = newCurrentSearchCommand;
+				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
+			}),
+		setCount: (newCount) =>
+			set((state) => {
+				state.count = newCount;
+				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
+			}),
+		setPages: (newPages) =>
+			set((state) => {
+				state.pages = newPages;
+				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
+			}),
+		setCurrentlySelectedCharacter: (newCurrentlySelectedCharacter) =>
+			set((state) => {
+				state.currentlySelectedCharacter = newCurrentlySelectedCharacter;
 				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
 			}),
 	}))
@@ -168,6 +184,18 @@ function getInitialSearchCategory() {
 	} catch (error) {
 		console.log(error);
 		return SearchCategories.Characters;
+	}
+}
+
+function getInitialCurrentlySelectedCharacter() {
+	try {
+		const search = JSON.parse(
+			localStorage.getItem(LocalStorageKeys.Search) || '[]'
+		);
+		return search.currentlySelectedCharacter ?? null;
+	} catch (error) {
+		console.log(error);
+		return null;
 	}
 }
 

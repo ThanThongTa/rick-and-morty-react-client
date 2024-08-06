@@ -8,6 +8,7 @@ export const allCharactersQuery = gql`
 				pages
 			}
 			results {
+				id
 				name
 				status
 				species

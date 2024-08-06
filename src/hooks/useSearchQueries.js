@@ -14,8 +14,11 @@ export function useSearchQueries() {
 	const setSearch = useSearchStore((state) => state.setSearch);
 	const setStoredEpisodes = useSearchStore((state) => state.setStoredEpisodes);
 	const setSearchCategory = useSearchStore((state) => state.setSearchCategory);
+	const setPages = useSearchStore((state) => state.setPages);
+	const setCount = useSearchStore((state) => state.setCount);
 	const currentSearchCategory = useSearchStore((state) => state.searchCategory);
 	const search = useSearchStore((state) => state.search);
+	const setCurrentPage = useSearchStore((state) => state.setCurrentPage);
 
 	const setStoredCharacters = useSearchStore(
 		(state) => state.setStoredCharacters
@@ -49,14 +52,23 @@ export function useSearchQueries() {
 	const queryAllCharacters = async () => {
 		const res = await refetchCharacters({ page: currentPage });
 		setStoredCharacters(res.data.characters.results);
+		setCurrentPage(currentPage);
+		setCount(res.data.characters.info.count);
+		setPages(res.data.characters.info.pages);
 	};
 	const queryAllLocations = async () => {
 		const res = await refetchLocations({ page: currentPage });
 		setStoredLocations(res.data.locations.results);
+		setCurrentPage(currentPage);
+		setCount(res.data.locations.info.count);
+		setPages(res.data.locations.info.pages);
 	};
 	const queryAllEpisodes = async () => {
 		const res = await refetchEpisodes({ page: currentPage });
 		setStoredEpisodes(res.data.episodes.results);
+		setCurrentPage(currentPage);
+		setCount(res.data.episodes.info.count);
+		setPages(res.data.episodes.info.pages);
 	};
 
 	const queryFilterCharacters = async () => {

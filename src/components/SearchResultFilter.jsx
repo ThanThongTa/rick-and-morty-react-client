@@ -6,19 +6,24 @@ import LocationResultFilters from './LocationResultFilters';
 
 export default function SearchResultFilter() {
 	const searchCategory = useSearchStore((state) => state.searchCategory);
+	const characters = useSearchStore((state) => state.characters);
 
 	//Strategy für Filter nach Kategorien
 	return (
-		<section className="search-results__filters search-results__section">
-			{searchCategory === SearchCategories.Characters && (
-				<CharacterResultFilters />
+		<>
+			{characters && characters.length > 0 && (
+				<section className="search-results__filters search-results__section">
+					{searchCategory === SearchCategories.Characters && (
+						<CharacterResultFilters />
+					)}
+					{searchCategory === SearchCategories.Episodes &&
+						` Episodes: No special filters for episodes `}
+					{searchCategory === SearchCategories.Locations && (
+						<LocationResultFilters />
+					)}
+					<br />
+				</section>
 			)}
-			{searchCategory === SearchCategories.Episodes &&
-				` Episodes: No special filters for episodes `}
-			{searchCategory === SearchCategories.Locations && (
-				<LocationResultFilters />
-			)}
-			<br />
-		</section>
+		</>
 	);
 }
