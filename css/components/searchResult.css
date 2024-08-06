@@ -11,14 +11,36 @@
 	display: flex;
 	flex-wrap: wrap;
 	gap: 1rem;
-	justify-content: center;
-	margin: auto;
 	width: var(--max-width-s);
+	border: 1px solid yellow;
 }
 
 .search-results__info {
 	display: flex;
 	width: var(--max-width-s);
-	margin: auto;
-	justify-content: center;
+	border: 1px solid greenyellow;
+}
+
+.search-results__list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	width: var(--max-width-s);
+	border: 1px solid red;
+}
+
+.search-results__images {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	width: var(--max-width-s);
+	border: 1px solid blue;
+}
+
+.search-results__details {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	width: var(--max-width-s);
+	border: 1px solid orange;
 }
