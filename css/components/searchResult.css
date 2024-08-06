@@ -1,0 +1,24 @@
+.search-results {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	justify-content: center;
+	margin: auto;
+	width: var(--max-width-s);
+}
+
+.search-results__filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	justify-content: center;
+	margin: auto;
+	width: var(--max-width-s);
+}
+
+.search-results__info {
+	display: flex;
+	width: var(--max-width-s);
+	margin: auto;
+	justify-content: center;
+}

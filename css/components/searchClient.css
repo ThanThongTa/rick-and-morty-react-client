@@ -1,0 +1,34 @@
+.heading {
+	display: flex;
+	justify-content: center;
+	color: var(--heading-color);
+}
+
+.search-form {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 1rem;
+	margin-inline: auto;
+	margin-block-start: 1em;
+	width: var(--max-width-s);
+
+	.search-categories {
+		display: flex;
+		margin-inline: auto;
+		gap: 1rem;
+		color: var(--text-color);
+	}
+
+	.search-inputs {
+		display: flex;
+		margin-inline: auto;
+		gap: 1rem;
+	}
+
+	.search-input {
+		padding-inline-start: 0.5rem;
+		outline-color: var(--theme-accent-color);
+	}
+}

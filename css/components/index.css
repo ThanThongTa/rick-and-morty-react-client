@@ -1,1 +1,5 @@
 /* Komponenten */
+@import './searchCategories.css';
+@import './searchClient.css';
+@import './searchInput.css';
+@import './searchResult.css';
