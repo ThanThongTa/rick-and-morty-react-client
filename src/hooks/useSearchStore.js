@@ -39,6 +39,21 @@ export const useSearchStore = create()(
 				state.search = newSearch;
 				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
 			}),
+		setSearchCategory: (newSearchCategory) =>
+			set((state) => {
+				state.searchCategory = newSearchCategory;
+				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
+			}),
+		setCurrentPage: (newCurrentPage) =>
+			set((state) => {
+				state.currentPage = newCurrentPage;
+				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
+			}),
+		setCurrentSearchCommand: (newCurrentSearchCommand) =>
+			set((state) => {
+				state.currentSearchCommand = newCurrentSearchCommand;
+				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
+			}),
 	}))
 );
 
@@ -94,12 +109,13 @@ function searchReducer(state, { type, data }) {
 				state.searchCategory = SearchCategories.Characters;
 				state.count = data.characters.info.count;
 				state.pages = data.characters.info.pages;
-				state.currentPage = 1;
+				state.currentPage = data.page;
 				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
 			}
 			return state;
 		case SearchCommands.FilterCharacters:
 			if (data && data.characters) {
+				state.characters = data.characters.results;
 				state.searchCategory = SearchCategories.Characters;
 				state.search = data.search;
 				state.count = data.characters.info.count;
