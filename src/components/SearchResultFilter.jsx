@@ -3,15 +3,16 @@ import { useSearchStore } from '../hooks/useSearchStore';
 import { SearchCategories } from '../globals/SearchCategories';
 import CharacterResultFilters from './CharacterResultFilters';
 import LocationResultFilters from './LocationResultFilters';
+import { useSearchQueries } from '../hooks/useSearchQueries';
 
 export default function SearchResultFilter() {
 	const searchCategory = useSearchStore((state) => state.searchCategory);
-	const characters = useSearchStore((state) => state.characters);
+	const { hasResults } = useSearchQueries();
 
 	//Strategy für Filter nach Kategorien
 	return (
 		<>
-			{characters && characters.length > 0 && (
+			{hasResults() && (
 				<section className="search-results__filters search-results__section">
 					{searchCategory === SearchCategories.Characters && (
 						<CharacterResultFilters />

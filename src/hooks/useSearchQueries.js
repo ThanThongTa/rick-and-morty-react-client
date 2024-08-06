@@ -30,6 +30,10 @@ export function useSearchQueries() {
 		(state) => state.setCurrentSearchCommand
 	);
 
+	const characters = useSearchStore((state) => state.characters);
+	const locations = useSearchStore((state) => state.locations);
+	const episodes = useSearchStore((state) => state.episodes);
+
 	/* Diese Werte werden im Hook geändert */
 	let currentPage = useSearchStore((state) => state.currentPage);
 
@@ -130,6 +134,19 @@ export function useSearchQueries() {
 		}
 	};
 
+	const hasResults = () => {
+		switch (currentSearchCategory) {
+			case SearchCategories.Characters:
+				return characters.length > 0;
+			case SearchCategories.Locations:
+				return locations.length > 0;
+			case SearchCategories.Episodes:
+				return episodes.length > 0;
+			default:
+				return false;
+		}
+	};
+
 	/* Ändert den currentSearchCategory */
 	const changeCategory = (category) => {
 		setSearchCategory(category);
@@ -149,5 +166,6 @@ export function useSearchQueries() {
 		changePage,
 		queryAll,
 		filterAll,
+		hasResults,
 	};
 }

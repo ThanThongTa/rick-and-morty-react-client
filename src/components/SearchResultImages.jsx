@@ -1,14 +1,15 @@
 import { useSearchStore } from '../hooks/useSearchStore';
 import { SearchCategories } from '../globals/SearchCategories';
+import { useSearchQueries } from '../hooks/useSearchQueries';
 
 /* Komponente für die Anzeige der Bilder der Suchergebnisse */
 export default function SearchResultImages() {
 	const searchCategory = useSearchStore((state) => state.searchCategory);
-	const characters = useSearchStore((state) => state.characters);
+	const { hasResults } = useSearchQueries();
 	//Visitor für GetImages
 	return (
 		<>
-			{characters && characters.length > 0 && (
+			{hasResults() && (
 				<section className="search-results__images search-results__section">
 					{searchCategory === SearchCategories.Characters &&
 						'Listbox of images to the characters in search results'}
