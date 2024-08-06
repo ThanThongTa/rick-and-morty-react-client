@@ -1,11 +1,14 @@
 import { Heading, Label } from 'react-aria-components';
 import { useCharactersStore } from '../hooks/useCharactersStore';
 
+/* Komponente für die Anzeige der Details eines Charakters */
 export default function CharacterResultDetails() {
+	/* ermitteln der ID des aktuell ausgewählten Charakters */
 	const selectedCharacterId = useCharactersStore(
 		(state) => state.currentlySelectedCharacter
 	);
 	const characters = useCharactersStore((state) => state.characters);
+	/* ermitteln des ausgewählten Charakters */
 	const selectedCharacter = characters.find(
 		(character) => character.id === selectedCharacterId
 	);
@@ -13,9 +16,9 @@ export default function CharacterResultDetails() {
 	return (
 		<>
 			{selectedCharacter && (
-				<div>
+				<section className="character-details-wrapper">
 					<Heading level="4">Character Details</Heading>
-					<div>
+					<section className="character-details">
 						<img src={selectedCharacter.image} alt={selectedCharacter.name} />
 						<p>
 							<Label>Name: </Label>
@@ -51,8 +54,8 @@ export default function CharacterResultDetails() {
 								{selectedCharacter.location.name}
 							</p>
 						)}
-					</div>
-				</div>
+					</section>
+				</section>
 			)}
 		</>
 	);

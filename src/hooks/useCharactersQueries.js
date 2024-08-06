@@ -11,25 +11,27 @@ export function useCharactersQueries() {
 	const setSearch = useCharactersStore((state) => state.setSearch);
 	const setPages = useCharactersStore((state) => state.setPages);
 	const setCount = useCharactersStore((state) => state.setCount);
-	const search = useCharactersStore((state) => state.search);
 	const setCurrentPage = useCharactersStore((state) => state.setCurrentPage);
+	const setStoredCharacters = useCharactersStore(
+		(state) => state.setStoredCharacters
+	);
+	/* Werte aus dem Zustand */
+	const search = useCharactersStore((state) => state.search);
 	const status = useCharactersStore((state) => state.currentlySelectedStatus);
 	const species = useCharactersStore((state) => state.currentlySelectedSpecies);
 	const type = useCharactersStore((state) => state.currentlySelectedType);
 	const gender = useCharactersStore((state) => state.currentlySelectedGender);
-
-	const setStoredCharacters = useCharactersStore(
-		(state) => state.setStoredCharacters
-	);
 	const characters = useCharactersStore((state) => state.characters);
 
 	/* Diese Werte werden im Hook geändert */
 	let currentPage = useCharactersStore((state) => state.currentPage);
 
+	/* Hook, damit die Suche neu ausgeführt wird, wenn sich ein Filter ändert */
 	useEffect(() => {
 		saveFetchedCharacters();
 	}, [search, status, species, type, gender]);
 
+	/* Lädt die Daten neu und speichert die Werte im Zustand */
 	const saveFetchedCharacters = async function () {
 		const res = await refetchCharacters({
 			page: currentPage,
@@ -60,7 +62,7 @@ export function useCharactersQueries() {
 		}
 	);
 
-	/* Lädt die Lazy Queries und speichert die Werte im Zustand */
+	/* Laden der Queries und speichern der Werte im Zustand */
 	const queryAllCharacters = async () => {
 		const res = await refetchCharacters({ page: currentPage });
 		setStoredCharacters(res.data.characters.results);
@@ -74,7 +76,7 @@ export function useCharactersQueries() {
 		setStoredCharacters(res.data.characters.results);
 	};
 
-	/* schaut in die currentSearchCategory und filtert dann die entsprechende Query */
+	/* filtert die Characters */
 	const filterCharacters = () => {
 		console.log(`filterCharacters`);
 		const term = document.querySelector('.search-input').value;
@@ -83,6 +85,7 @@ export function useCharactersQueries() {
 		queryFilterCharacters();
 	};
 
+	/* prüft, ob Ergebnisse vorhanden sind */
 	const hasResults = () => {
 		return characters.length > 0;
 	};

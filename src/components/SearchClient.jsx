@@ -12,7 +12,7 @@ export default function SearchClient() {
 	});
 
 	return (
-		<>
+		<section className="search-client">
 			<Heading level="1" className="heading">
 				Rick and Morty DB
 			</Heading>
@@ -23,6 +23,6 @@ export default function SearchClient() {
 				</SearchField>
 				<SearchResult />
 			</ApolloProvider>
-		</>
+		</section>
 	);
 }

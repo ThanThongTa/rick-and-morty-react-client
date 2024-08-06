@@ -11,24 +11,29 @@ export function useLocationsQueries() {
 	const setSearch = useLocationsStore((state) => state.setSearch);
 	const setPages = useLocationsStore((state) => state.setPages);
 	const setCount = useLocationsStore((state) => state.setCount);
-	const search = useLocationsStore((state) => state.search);
 	const setCurrentPage = useLocationsStore((state) => state.setCurrentPage);
+	const setStoredLocations = useLocationsStore(
+		(state) => state.setStoredLocations
+	);
+
+	/* Werte aus dem Zustand */
+	const search = useLocationsStore((state) => state.search);
+	const locations = useLocationsStore((state) => state.locations);
 	const type = useLocationsStore((state) => state.currentlySelectedType);
 	const dimension = useLocationsStore(
 		(state) => state.currentlySelectedDimension
 	);
-	const setStoredLocations = useLocationsStore(
-		(state) => state.setStoredLocations
-	);
-	const locations = useLocationsStore((state) => state.locations);
 
 	/* Diese Werte werden im Hook geändert */
 	let currentPage = useLocationsStore((state) => state.currentPage);
 
+	/* Hook, damit die Suche neu ausgeführt wird, wenn
+	 * sich der Suchbegriff oder ein Filter ändert */
 	useEffect(() => {
 		saveFetchedLocations();
 	}, [search, type, dimension]);
 
+	/* Lädt die Daten neu und speichert die Werte im Zustand */
 	const saveFetchedLocations = async function () {
 		const res = await refetchLocations({
 			page: currentPage,
@@ -65,7 +70,7 @@ export function useLocationsQueries() {
 		setStoredLocations(res.data.locations.results);
 	};
 
-	/* schaut in die currentSearchCategory und filtert dann die entsprechende Query */
+	/* filtert die Locations */
 	const filterLocations = () => {
 		console.log(`filterLocations`);
 		const term = document.querySelector('.search-input').value;
@@ -74,6 +79,7 @@ export function useLocationsQueries() {
 		queryFilterLocations();
 	};
 
+	/* prüft, ob Ergebnisse vorhanden sind */
 	const hasResults = () => {
 		return locations.length > 0;
 	};

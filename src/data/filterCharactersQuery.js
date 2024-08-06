@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 
+/* GraphQL Abfrage für die Charaktere mit Filtern */
 export const filterCharactersQuery = gql`
 	query (
 		$page: Int

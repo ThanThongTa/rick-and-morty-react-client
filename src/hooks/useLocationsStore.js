@@ -2,6 +2,9 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { LocalStorageKeys } from '../globals/LocalStorageKeys';
 
+/* Custom Hook für die Verwendung von Zustand und Immer
+ * speichert den Zustand in LocalStorage und lädt ihn wieder
+ */
 export const useLocationsStore = create()(
 	immer((set) => ({
 		search: getInitialSearch(),
@@ -12,41 +15,49 @@ export const useLocationsStore = create()(
 		currentlySelectedLocation: getInitialCurrentlySelectedLocation(),
 		currentlySelectedDimension: getInitialCurrentlySelectedDimension(),
 		locations: getInitialLocations(),
+		/* speichert neue Locations im Zustand und im LocalStorage */
 		setStoredLocations: (newLocations) =>
 			set((state) => {
 				state.locations = newLocations;
 				localStorage.setItem(LocalStorageKeys.Location, JSON.stringify(state));
 			}),
+		/* speichert die Suche im Zustand und im LocalStorage */
 		setSearch: (newSearch) =>
 			set((state) => {
 				state.search = newSearch;
 				localStorage.setItem(LocalStorageKeys.Location, JSON.stringify(state));
 			}),
+		/* speichert die aktuelle Page im Zustand und im LocalStorage */
 		setCurrentPage: (newCurrentPage) =>
 			set((state) => {
 				state.currentPage = newCurrentPage;
 				localStorage.setItem(LocalStorageKeys.Location, JSON.stringify(state));
 			}),
+		/* speichert die Anzahl der Locations im Zustand und im LocalStorage */
 		setCount: (newCount) =>
 			set((state) => {
 				state.count = newCount;
 				localStorage.setItem(LocalStorageKeys.Location, JSON.stringify(state));
 			}),
+		/* speichert die Anzahl der Pages im Zustand und im LocalStorage */
 		setPages: (newPages) =>
 			set((state) => {
 				state.pages = newPages;
 				localStorage.setItem(LocalStorageKeys.Location, JSON.stringify(state));
 			}),
+		/* speichert den Type der aktuellen Location im Zustand und im LocalStorage */
 		setCurrentlySelectedType: (newCurrentlySelectedType) =>
 			set((state) => {
 				state.currentlySelectedType = newCurrentlySelectedType;
 				localStorage.setItem(LocalStorageKeys.Location, JSON.stringify(state));
 			}),
+		/* speichert die ID der aktuellen Location im Zustand und im LocalStorage */
 		setCurrentlySelectedLocation: (newCurrentlySelectedLocation) =>
 			set((state) => {
 				state.currentlySelectedLocation = newCurrentlySelectedLocation;
 				localStorage.setItem(LocalStorageKeys.Location, JSON.stringify(state));
 			}),
+		/* speichert die Dimension der aktuellen Location im Zustand und im LocalStorage */
 		setCurrentlySelectedDimension: (newCurrentlySelectedDimension) =>
 			set((state) => {
 				state.currentlySelectedDimension = newCurrentlySelectedDimension;
@@ -69,6 +80,7 @@ function getInitialLocations() {
 	}
 }
 
+/* Lädt den gespeicherten Suchbegriff aus dem LocalStorage */
 function getInitialSearch() {
 	try {
 		const search = JSON.parse(
@@ -81,6 +93,7 @@ function getInitialSearch() {
 	}
 }
 
+/* Lädt die gespeicherte aktuelle Page aus dem LocalStorage */
 function getInitialPage() {
 	try {
 		const search = JSON.parse(
@@ -93,6 +106,7 @@ function getInitialPage() {
 	}
 }
 
+/* Lädt die gespeicherte Anzahl der Locations aus dem LocalStorage */
 function getInitialCount() {
 	try {
 		const search = JSON.parse(
@@ -105,6 +119,7 @@ function getInitialCount() {
 	}
 }
 
+/* Lädt die gespeicherte Anzahl der gesamten Pages aus dem LocalStorage */
 function getInitialPages() {
 	try {
 		const search = JSON.parse(
@@ -117,6 +132,7 @@ function getInitialPages() {
 	}
 }
 
+/* Lädt den ausgewählten Type aus dem LocalStorage */
 function getInitialCurrentlySelectedType() {
 	try {
 		const search = JSON.parse(
@@ -129,6 +145,7 @@ function getInitialCurrentlySelectedType() {
 	}
 }
 
+/* Lädt die ausgewählte ID aus dem LocalStorage */
 function getInitialCurrentlySelectedLocation() {
 	try {
 		const search = JSON.parse(
@@ -141,6 +158,7 @@ function getInitialCurrentlySelectedLocation() {
 	}
 }
 
+/* Lädt die ausgewählte Dimension aus dem LocalStorage */
 function getInitialCurrentlySelectedDimension() {
 	try {
 		const search = JSON.parse(

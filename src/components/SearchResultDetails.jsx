@@ -5,6 +5,7 @@ import LocationResultDetails from './LocationResultDetails';
 import EpisodeResultDetails from './EpisodeResultDetails';
 import { useSearchCategoryStore } from '../hooks/useSearchCategoryStore';
 
+/* Komponente für die Anzeige von Details der Suchergebnisse */
 export default function SearchResultDetails() {
 	const searchCategory = useSearchCategoryStore(
 		(state) => state.searchCategory

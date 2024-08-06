@@ -10,26 +10,34 @@ import {
 } from 'react-aria-components';
 import { useLocationsStore } from '../hooks/useLocationsStore';
 
+/* Komponente für die Anzeige der Filter für die Locations */
 export default function LocationResultFilters() {
+	/* Auslesen aktueller Werte aus Zustand */
 	const locations = useLocationsStore((state) => state.locations);
-	const types = new Set(locations.map((location) => location.type));
 	const selectedType = useLocationsStore(
 		(state) => state.currentlySelectedType
 	);
-	const setSelectedType = useLocationsStore(
-		(state) => state.setCurrentlySelectedType
-	);
-	const dimensions = new Set(locations.map((location) => location.dimension));
 	const selectedDimension = useLocationsStore(
 		(state) => state.currentlySelectedDimension
+	);
+	/* Ermitteln der Set-Funktionen aus Zustand */
+	const setSelectedType = useLocationsStore(
+		(state) => state.setCurrentlySelectedType
 	);
 	const setSelectedDimension = useLocationsStore(
 		(state) => state.setCurrentlySelectedDimension
 	);
 
+	/* Ermitteln der Types aus den Locations */
+	const types = new Set(locations.map((location) => location.type));
+
+	/* Ermitteln der Dimensions aus den Locations */
+	const dimensions = new Set(locations.map((location) => location.dimension));
+
 	return (
-		<div>
+		<section className="location-filters-wrapper">
 			<Heading level="4">Location Filters</Heading>
+			{/* Select für die Types der Locations */}
 			<Select onSelectionChange={setSelectedType} selectedKey={selectedType}>
 				<Label>Type</Label>
 				<Button>
@@ -52,6 +60,8 @@ export default function LocationResultFilters() {
 					</ListBox>
 				</Popover>
 			</Select>
+			{/* Ende Select für die Types */}
+			{/* Select für die Dimensions der Locations */}
 			<Select
 				onSelectionChange={setSelectedDimension}
 				selectedKey={selectedDimension}
@@ -77,6 +87,7 @@ export default function LocationResultFilters() {
 					</ListBox>
 				</Popover>
 			</Select>
-		</div>
+			{/* Ende Select für die Dimensions */}
+		</section>
 	);
 }

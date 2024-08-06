@@ -1,3 +1,4 @@
+/* Enum Konstante für die LocalStorage Keys */
 export const LocalStorageKeys = {
 	Theme: 'theme',
 	Search: 'search',

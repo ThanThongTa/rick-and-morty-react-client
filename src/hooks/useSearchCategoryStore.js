@@ -9,6 +9,7 @@ import { SearchCategories } from '../globals/SearchCategories';
 export const useSearchCategoryStore = create()(
 	immer((set) => ({
 		searchCategory: getInitialSearchCategory(),
+		/* speichert die aktuelle Kategorie im Zustand und im LocalStorage */
 		setSearchCategory: (newSearchCategory) =>
 			set((state) => {
 				state.searchCategory = newSearchCategory;
@@ -17,6 +18,7 @@ export const useSearchCategoryStore = create()(
 	}))
 );
 
+/* Lädt die aktuelle Suchkategorie aus dem LocalStorage */
 function getInitialSearchCategory() {
 	try {
 		const search = JSON.parse(

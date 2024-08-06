@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 
+/* GraphQL Abfrage für die Episode mit Filtern */
 export const filterEpisodesQuery = gql`
 	query ($page: Int, $name: String) {
 		episodes(page: $page, filter: { name: $name }) {

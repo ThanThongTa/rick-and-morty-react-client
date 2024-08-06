@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 
+/* GraphQL Abfrage für die Location mit Filtern */
 export const filterLocationsQuery = gql`
 	query ($page: Int, $name: String, $type: String, $dimension: String) {
 		locations(

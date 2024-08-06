@@ -10,11 +10,15 @@ import {
 } from 'react-aria-components';
 import { useCharactersStore } from '../hooks/useCharactersStore';
 
+/* Komponente für die Einstellungen der Charaktersuche */
 export default function CharacterResultFilters() {
 	const characters = useCharactersStore((state) => state.characters);
+	/* Ermitteln der Werte für die Species */
 	const species = new Set(characters.map((character) => character.species));
+	/* Ermitteln der Werte für den Type */
 	const types = new Set(characters.map((character) => character.type));
 
+	/* Ermitteln der ausgewählten Werte aus Zustand */
 	const selectedGender = useCharactersStore(
 		(state) => state.currentlySelectedGender
 	);
@@ -27,6 +31,7 @@ export default function CharacterResultFilters() {
 	const selectedSpecies = useCharactersStore(
 		(state) => state.currentlySelectedSpecies
 	);
+	/* Ermitteln der Set-Funktionen aus Zustand */
 	const setSelectedGender = useCharactersStore(
 		(state) => state.setCurrentlySelectedGender
 	);
@@ -41,8 +46,9 @@ export default function CharacterResultFilters() {
 	);
 
 	return (
-		<div>
+		<section className="character-filters-wrapper">
 			<Heading level="4">Character Filters</Heading>
+			{/* Select für die Species */}
 			<Select
 				onSelectionChange={setSelectedSpecies}
 				selectedKey={selectedSpecies}
@@ -68,6 +74,8 @@ export default function CharacterResultFilters() {
 					</ListBox>
 				</Popover>
 			</Select>
+			{/* Ende Select für die Species */}
+			{/* Select für den Type */}
 			<Select onSelectionChange={setSelectedType} selectedKey={selectedType}>
 				<Label>Type</Label>
 				<Button>
@@ -90,6 +98,8 @@ export default function CharacterResultFilters() {
 					</ListBox>
 				</Popover>
 			</Select>
+			{/* Ende Select für den Type */}
+			{/* Select für den Status */}
 			<Select
 				onSelectionChange={setSelectedStatus}
 				selectedKey={selectedStatus}
@@ -108,6 +118,8 @@ export default function CharacterResultFilters() {
 					</ListBox>
 				</Popover>
 			</Select>
+			{/* Ende Select für den Status */}
+			{/* Select für den Gender */}
 			<Select
 				onSelectionChange={setSelectedGender}
 				selectedKey={selectedGender}
@@ -127,6 +139,7 @@ export default function CharacterResultFilters() {
 					</ListBox>
 				</Popover>
 			</Select>
-		</div>
+			{/* Ende Select für den Gender */}
+		</section>
 	);
 }
