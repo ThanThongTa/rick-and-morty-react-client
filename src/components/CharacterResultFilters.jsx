@@ -7,41 +7,69 @@ import {
 	Popover,
 	Select,
 	SelectValue,
-	Tag,
-	TagGroup,
-	TagList,
 } from 'react-aria-components';
 import { useSearchStore } from '../hooks/useSearchStore';
-import { useState } from 'react';
 
 export default function CharacterResultFilters() {
 	const characters = useSearchStore((state) => state.characters);
 	const species = new Set(characters.map((character) => character.species));
 	const types = new Set(characters.map((character) => character.type));
 
-	const [selectedGender, setSelectedGender] = useState('all');
-	const [selectedStatus, setSelectedStatus] = useState('all');
-	const [selectedSpecies, setSelectedSpecies] = useState('');
-	const [selectedType, setSelectedType] = useState('all');
+	const selectedGender = useSearchStore(
+		(state) => state.currentlySelectedGender
+	);
+	const selectedStatus = useSearchStore(
+		(state) => state.currentlySelectedStatus
+	);
+	const selectedType = useSearchStore((state) => state.currentlySelectedType);
+	const selectedSpecies = useSearchStore(
+		(state) => state.currentlySelectedSpecies
+	);
+	const setSelectedGender = useSearchStore(
+		(state) => state.setCurrentlySelectedGender
+	);
+	const setSelectedStatus = useSearchStore(
+		(state) => state.setCurrentlySelectedStatus
+	);
+	const setSelectedSpecies = useSearchStore(
+		(state) => state.setCurrentlySelectedSpecies
+	);
+	const setSelectedType = useSearchStore(
+		(state) => state.setCurrentlySelectedType
+	);
+
+	const changeSelectedGender = (newSelectedGender) => {
+		setSelectedGender(newSelectedGender);
+	};
 
 	return (
 		<div>
 			<Heading level="4">Character Filters</Heading>
-			<TagGroup
-				aria-label="Character species"
-				selectionMode="single"
-				selectedKeys={[selectedSpecies]}
+			<Select
 				onSelectionChange={setSelectedSpecies}
+				selectedKey={selectedSpecies}
 			>
 				<Label>Species</Label>
-				<TagList>
-					{Array.from(species).map((species) => (
-						<Tag key={species} id={species}>
-							{species}
-						</Tag>
-					))}
-				</TagList>
-			</TagGroup>
+				<Button>
+					<SelectValue />
+					<span aria-hidden="true">▼</span>
+				</Button>
+				<Popover>
+					<ListBox>
+						<ListBoxItem id="all" textValue="all">
+							all
+						</ListBoxItem>
+						{Array.from(species).map(
+							(species) =>
+								species && (
+									<ListBoxItem key={species} id={species}>
+										{species}
+									</ListBoxItem>
+								)
+						)}
+					</ListBox>
+				</Popover>
+			</Select>
 			<Select onSelectionChange={setSelectedType} selectedKey={selectedType}>
 				<Label>Type</Label>
 				<Button>
@@ -83,7 +111,7 @@ export default function CharacterResultFilters() {
 				</Popover>
 			</Select>
 			<Select
-				onSelectionChange={setSelectedGender}
+				onSelectionChange={changeSelectedGender}
 				selectedKey={selectedGender}
 			>
 				<Label>Gender</Label>

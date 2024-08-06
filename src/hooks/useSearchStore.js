@@ -16,6 +16,10 @@ export const useSearchStore = create()(
 		searchCategory: getInitialSearchCategory(),
 		currentSearchCommand: getInitialCurrentSearchCommand(),
 		currentlySelectedCharacter: getInitialCurrentlySelectedCharacter(),
+		currentlySelectedSpecies: getInitialCurrentlySelectedSpecies(),
+		currentlySelectedType: getInitialCurrentlySelectedType(),
+		currentlySelectedGender: getInitialCurrentlySelectedGender(),
+		currentlySelectedStatus: getInitialCurrentlySelectedStatus(),
 		characters: getInitialCharacters(),
 		locations: getInitialLocations(),
 		episodes: getInitialEpisodes(),
@@ -68,6 +72,26 @@ export const useSearchStore = create()(
 		setCurrentlySelectedCharacter: (newCurrentlySelectedCharacter) =>
 			set((state) => {
 				state.currentlySelectedCharacter = newCurrentlySelectedCharacter;
+				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
+			}),
+		setCurrentlySelectedSpecies: (newCurrentlySelectedSpecies) =>
+			set((state) => {
+				state.currentlySelectedSpecies = newCurrentlySelectedSpecies;
+				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
+			}),
+		setCurrentlySelectedType: (newCurrentlySelectedType) =>
+			set((state) => {
+				state.currentlySelectedType = newCurrentlySelectedType;
+				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
+			}),
+		setCurrentlySelectedGender: (newCurrentlySelectedGender) =>
+			set((state) => {
+				state.currentlySelectedGender = newCurrentlySelectedGender;
+				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
+			}),
+		setCurrentlySelectedStatus: (newCurrentlySelectedStatus) =>
+			set((state) => {
+				state.currentlySelectedStatus = newCurrentlySelectedStatus;
 				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
 			}),
 	}))
@@ -193,6 +217,54 @@ function getInitialCurrentlySelectedCharacter() {
 			localStorage.getItem(LocalStorageKeys.Search) || '[]'
 		);
 		return search.currentlySelectedCharacter ?? null;
+	} catch (error) {
+		console.log(error);
+		return null;
+	}
+}
+
+function getInitialCurrentlySelectedSpecies() {
+	try {
+		const search = JSON.parse(
+			localStorage.getItem(LocalStorageKeys.Search) || '[]'
+		);
+		return search.currentlySelectedSpecies ?? null;
+	} catch (error) {
+		console.log(error);
+		return null;
+	}
+}
+
+function getInitialCurrentlySelectedType() {
+	try {
+		const search = JSON.parse(
+			localStorage.getItem(LocalStorageKeys.Search) || '[]'
+		);
+		return search.currentlySelectedType ?? 'all';
+	} catch (error) {
+		console.log(error);
+		return null;
+	}
+}
+
+function getInitialCurrentlySelectedGender() {
+	try {
+		const search = JSON.parse(
+			localStorage.getItem(LocalStorageKeys.Search) || '[]'
+		);
+		return search.currentlySelectedGender ?? 'all';
+	} catch (error) {
+		console.log(error);
+		return null;
+	}
+}
+
+function getInitialCurrentlySelectedStatus() {
+	try {
+		const search = JSON.parse(
+			localStorage.getItem(LocalStorageKeys.Search) || '[]'
+		);
+		return search.currentlySelectedStatus ?? 'all';
 	} catch (error) {
 		console.log(error);
 		return null;

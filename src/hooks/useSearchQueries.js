@@ -5,6 +5,7 @@ import { filterCharactersQuery } from '../data/filterCharactersQuery';
 import { filterLocationsQuery } from '../data/filterLocationsQuery';
 import { filterEpisodesQuery } from '../data/filterEpisodesQuery';
 import { SearchCommands } from '../globals/SearchCommands';
+import { useEffect } from 'react';
 
 /* Custom Hook für die Verwendung des Apollo Clients
  * verwendet den Hook für den Zustand als State Manager
@@ -19,6 +20,10 @@ export function useSearchQueries() {
 	const currentSearchCategory = useSearchStore((state) => state.searchCategory);
 	const search = useSearchStore((state) => state.search);
 	const setCurrentPage = useSearchStore((state) => state.setCurrentPage);
+	const status = useSearchStore((state) => state.currentlySelectedStatus);
+	const species = useSearchStore((state) => state.currentlySelectedSpecies);
+	const type = useSearchStore((state) => state.currentlySelectedType);
+	const gender = useSearchStore((state) => state.currentlySelectedGender);
 
 	const setStoredCharacters = useSearchStore(
 		(state) => state.setStoredCharacters
@@ -37,11 +42,37 @@ export function useSearchQueries() {
 	/* Diese Werte werden im Hook geändert */
 	let currentPage = useSearchStore((state) => state.currentPage);
 
+	useEffect(() => {
+		saveFetchedCharacters();
+	}, [search, status, species, type, gender]);
+
+	const saveFetchedCharacters = async function () {
+		const res = await refetchCharacters({
+			page: currentPage,
+			name: search,
+			status: status === 'all' ? null : status,
+			species: species === 'all' ? null : species,
+			type: type === 'all' ? null : type,
+			gender: gender === 'all' ? null : gender,
+		});
+		setStoredCharacters(res.data.characters.results);
+		setCurrentPage(currentPage);
+		setCount(res.data.characters.info.count);
+		setPages(res.data.characters.info.pages);
+	};
+
 	/* LazyLoading der Queries */
 	const [, { refetch: refetchCharacters }] = useLazyQuery(
 		filterCharactersQuery,
 		{
-			variables: { page: currentPage, name: search },
+			variables: {
+				page: currentPage,
+				name: search ?? null,
+				status: status === 'all' ? null : status,
+				species: species === 'all' ? null : species,
+				type: type === 'all' ? null : type,
+				gender: gender === 'all' ? null : gender,
+			},
 		}
 	);
 	const [, { refetch: refetchLocations }] = useLazyQuery(filterLocationsQuery, {
@@ -110,7 +141,7 @@ export function useSearchQueries() {
 	const filterAll = () => {
 		console.log(`filterAll: ${currentSearchCategory}`);
 		const term = document.querySelector('.search-input').value;
-		if (term.length < 2) return;
+		if (term.length < 2 && !species && !status && !type && !gender) return;
 		switch (currentSearchCategory) {
 			case SearchCategories.Characters: {
 				setCurrentSearchCommand(SearchCommands.FilterCharacters);
