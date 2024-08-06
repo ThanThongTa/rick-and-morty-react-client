@@ -1,9 +1,9 @@
 import { Label, Radio, RadioGroup } from 'react-aria-components';
-import { useSearchQueries } from '../hooks/useSearchQueries';
+import { useSearchCategoryQueries } from '../hooks/useSearchCategoryQueries';
 
 /* Komponente für die Auswahl der Such-Kategorien */
 export default function SearchCategories() {
-	const { changeCategory } = useSearchQueries();
+	const { changeCategory } = useSearchCategoryQueries();
 
 	return (
 		<RadioGroup

@@ -1,18 +1,48 @@
-import { useEffect } from 'react';
 import { Button, Input, Label } from 'react-aria-components';
 import { useSearchQueries } from '../hooks/useSearchQueries';
-import { useDebouncedValue } from '../hooks/useDebouncedValue';
+import { useEpisodesQueries } from '../hooks/useEpisodesQueries';
+import { useSearchCategoryStore } from '../hooks/useSearchCategoryStore';
+import { SearchCategories } from '../globals/SearchCategories';
 
 /* Komponente für die Eingabe des Suchbegriffs */
 export default function SearchInput() {
 	const { search, setSearch, queryAll, filterAll } = useSearchQueries();
+	const {
+		setSearch: setSearchEpisodes,
+		queryAllEpisodes,
+		filterEpisodes,
+	} = useEpisodesQueries();
+	const currentSearchCategory = useSearchCategoryStore(
+		(state) => state.searchCategory
+	);
 
-	const debouncedSearchTerm = useDebouncedValue(search, 600);
+	const query = () => {
+		if (currentSearchCategory === SearchCategories.Episodes) {
+			queryAllEpisodes();
+			console.log('queryAllEpisodes');
+		} else {
+			queryAll();
+		}
+	};
 
-	useEffect(() => {
-		if (debouncedSearchTerm.length < 2) return;
-		filterAll(debouncedSearchTerm);
-	}, [debouncedSearchTerm, filterAll]);
+	const filter = () => {
+		if (currentSearchCategory === SearchCategories.Episodes) {
+			filterEpisodes();
+			console.log('filterEpisodes');
+		} else {
+			filterAll();
+		}
+	};
+
+	const updateSearchTerm = (e) => {
+		const term = e.target.value;
+		if (term.length < 2) return;
+		if (currentSearchCategory === SearchCategories.Episodes) {
+			setSearchEpisodes(term);
+		} else {
+			setSearch(term);
+		}
+	};
 
 	return (
 		<section className="search-inputs search-parameters-section">
@@ -21,7 +51,7 @@ export default function SearchInput() {
 				aria-label="Show all"
 				className="show-all-button button--ghost"
 				excludeFromTabOrder={false}
-				onPress={() => queryAll()}
+				onPress={() => query()}
 			>
 				Show all
 			</Button>
@@ -29,16 +59,14 @@ export default function SearchInput() {
 				className="search-input"
 				placeholder="Search"
 				value={search}
-				onChange={(e) => {
-					setSearch(e.target.value);
-				}}
+				onChange={updateSearchTerm}
 			/>
 			<Button
 				type="button"
 				aria-label="Search"
 				className="search-button button--ghost"
 				excludeFromTabOrder={false}
-				onPress={() => filterAll()}
+				onPress={() => filter()}
 			>
 				Search
 			</Button>

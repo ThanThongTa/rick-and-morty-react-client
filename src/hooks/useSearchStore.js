@@ -21,12 +21,10 @@ export const useSearchStore = create()(
 		currentlySelectedCharacterType: getInitialCurrentlySelectedCharacterType(),
 		currentlySelectedGender: getInitialCurrentlySelectedGender(),
 		currentlySelectedStatus: getInitialCurrentlySelectedStatus(),
-		currentlySelectedEpisode: getInitialCurrentlySelectedEpisode(),
 		currentlySelectedLocation: getInitialCurrentlySelectedLocation(),
 		currentlySelectedDimension: getInitialCurrentlySelectedDimension(),
 		characters: getInitialCharacters(),
 		locations: getInitialLocations(),
-		episodes: getInitialEpisodes(),
 		dispatch: (args) => set((state) => searchReducer(state, args)),
 		setStoredCharacters: (newCharacters) =>
 			set((state) => {
@@ -36,11 +34,6 @@ export const useSearchStore = create()(
 		setStoredLocations: (newLocations) =>
 			set((state) => {
 				state.locations = newLocations;
-				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
-			}),
-		setStoredEpisodes: (newEpisodes) =>
-			set((state) => {
-				state.episodes = newEpisodes;
 				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
 			}),
 		setSearch: (newSearch) =>
@@ -103,11 +96,6 @@ export const useSearchStore = create()(
 				state.currentlySelectedStatus = newCurrentlySelectedStatus;
 				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
 			}),
-		setCurrentlySelectedEpisode: (newCurrentlySelectedEpisode) =>
-			set((state) => {
-				state.currentlySelectedEpisode = newCurrentlySelectedEpisode;
-				localStorage.setItem(LocalStorageKeys.Search, JSON.stringify(state));
-			}),
 		setCurrentlySelectedLocation: (newCurrentlySelectedLocation) =>
 			set((state) => {
 				state.currentlySelectedLocation = newCurrentlySelectedLocation;
@@ -143,20 +131,6 @@ function getInitialLocations() {
 			localStorage.getItem(LocalStorageKeys.Search) || '[]'
 		);
 		return search.locations ?? [];
-	} catch (error) {
-		console.log(error);
-		return [];
-	}
-}
-
-/* Lädt die gespeicherten Episodes aus dem LocalStorage
- */
-function getInitialEpisodes() {
-	try {
-		const search = JSON.parse(
-			localStorage.getItem(LocalStorageKeys.Search) || '[]'
-		);
-		return search.episodes ?? [];
 	} catch (error) {
 		console.log(error);
 		return [];
@@ -312,18 +286,6 @@ function getInitialCurrentlySelectedLocation() {
 			localStorage.getItem(LocalStorageKeys.Search) || '[]'
 		);
 		return search.currentlySelectedLocation ?? null;
-	} catch (error) {
-		console.log(error);
-		return null;
-	}
-}
-
-function getInitialCurrentlySelectedEpisode() {
-	try {
-		const search = JSON.parse(
-			localStorage.getItem(LocalStorageKeys.Search) || '[]'
-		);
-		return search.currentlySelectedEpisode ?? null;
 	} catch (error) {
 		console.log(error);
 		return null;

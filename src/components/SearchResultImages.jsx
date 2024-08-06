@@ -2,6 +2,7 @@ import { useSearchStore } from '../hooks/useSearchStore';
 import { SearchCategories } from '../globals/SearchCategories';
 import { useSearchQueries } from '../hooks/useSearchQueries';
 import { Button } from 'react-aria-components';
+import { useEpisodesStore } from '../hooks/useEpisodesStore';
 
 /* Komponente für die Anzeige der Bilder der Suchergebnisse */
 export default function SearchResultImages() {
@@ -22,7 +23,7 @@ export default function SearchResultImages() {
 	const selectedEpisodeId = useSearchStore(
 		(state) => state.currentlySelectedEpisode
 	);
-	const episodes = useSearchStore((state) => state.episodes);
+	const episodes = useEpisodesStore((state) => state.episodes);
 	const selectedEpisode = episodes.find(
 		(location) => location.id === selectedEpisodeId
 	);

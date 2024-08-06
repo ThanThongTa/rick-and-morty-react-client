@@ -1,11 +1,13 @@
 /* Komponente für die Anzeige der Filter für die Suchergebnisse */
-import { useSearchStore } from '../hooks/useSearchStore';
 import { SearchCategories } from '../globals/SearchCategories';
 import CharacterResultFilters from './CharacterResultFilters';
 import LocationResultFilters from './LocationResultFilters';
+import { useSearchCategoryStore } from '../hooks/useSearchCategoryStore';
 
 export default function SearchResultFilter() {
-	const searchCategory = useSearchStore((state) => state.searchCategory);
+	const searchCategory = useSearchCategoryStore(
+		(state) => state.searchCategory
+	);
 
 	//Strategy für Filter nach Kategorien
 	return (

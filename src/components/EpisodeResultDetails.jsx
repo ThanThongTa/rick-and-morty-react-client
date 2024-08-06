@@ -1,11 +1,11 @@
 import { Heading, Label } from 'react-aria-components';
-import { useSearchStore } from '../hooks/useSearchStore';
+import { useEpisodesStore } from '../hooks/useEpisodesStore';
 
 export default function EpisodeResultDetails() {
-	const selectedEpisodeId = useSearchStore(
+	const selectedEpisodeId = useEpisodesStore(
 		(state) => state.currentlySelectedEpisode
 	);
-	const episodes = useSearchStore((state) => state.episodes);
+	const episodes = useEpisodesStore((state) => state.episodes);
 	const selectedEpisode = episodes.find(
 		(location) => location.id === selectedEpisodeId
 	);

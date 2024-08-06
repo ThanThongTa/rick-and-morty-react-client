@@ -1,9 +1,9 @@
 import { Heading, ListBox, ListBoxItem } from 'react-aria-components';
-import { useSearchStore } from '../hooks/useSearchStore';
+import { useEpisodesStore } from '../hooks/useEpisodesStore';
 
 export default function EpisodeResultList() {
-	const episodes = useSearchStore((state) => state.episodes);
-	const setSelected = useSearchStore(
+	const episodes = useEpisodesStore((state) => state.episodes);
+	const setSelected = useEpisodesStore(
 		(state) => state.setCurrentlySelectedEpisode
 	);
 	const changeSelected = (event) => {

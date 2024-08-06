@@ -3,6 +3,7 @@ import { SearchCategories } from '../globals/SearchCategories';
 import { useLazyQuery } from '@apollo/client';
 import { filterCharactersQuery } from '../data/filterCharactersQuery';
 import { filterLocationsQuery } from '../data/filterLocationsQuery';
+import { filterEpisodesQuery } from '../data/filterEpisodesQuery';
 import { SearchCommands } from '../globals/SearchCommands';
 import { useEffect } from 'react';
 
@@ -12,20 +13,16 @@ import { useEffect } from 'react';
 export function useSearchQueries() {
 	/* Funktionen für den Zustand */
 	const setSearch = useSearchStore((state) => state.setSearch);
+	const setSearchCategory = useSearchStore((state) => state.setSearchCategory);
 	const setPages = useSearchStore((state) => state.setPages);
 	const setCount = useSearchStore((state) => state.setCount);
+	const currentSearchCategory = useSearchStore((state) => state.searchCategory);
 	const search = useSearchStore((state) => state.search);
 	const setCurrentPage = useSearchStore((state) => state.setCurrentPage);
 	const status = useSearchStore((state) => state.currentlySelectedStatus);
 	const species = useSearchStore((state) => state.currentlySelectedSpecies);
-	const characterType = useSearchStore(
-		(state) => state.currentlySelectedCharacterType
-	);
-	const locationType = useSearchStore(
-		(state) => state.currentlySelectedLocationType
-	);
+	const type = useSearchStore((state) => state.currentlySelectedCharacterType);
 	const gender = useSearchStore((state) => state.currentlySelectedGender);
-	const dimension = useSearchStore((state) => state.currentlySelectedDimension);
 
 	const setStoredCharacters = useSearchStore(
 		(state) => state.setStoredCharacters
@@ -39,6 +36,7 @@ export function useSearchQueries() {
 
 	const characters = useSearchStore((state) => state.characters);
 	const locations = useSearchStore((state) => state.locations);
+	const episodes = useSearchStore((state) => state.episodes);
 
 	/* Diese Werte werden im Hook geändert */
 	let currentPage = useSearchStore((state) => state.currentPage);
@@ -50,6 +48,10 @@ export function useSearchQueries() {
 	useEffect(() => {
 		saveFetchedLocations();
 	}, [search, locationType, dimension]);
+
+	useEffect(() => {
+		saveFetchedEpisodes();
+	}, [search]);
 
 	const saveFetchedCharacters = async function () {
 		const res = await refetchCharacters({
@@ -79,6 +81,17 @@ export function useSearchQueries() {
 		setPages(res.data.locations.info.pages);
 	};
 
+	const saveFetchedEpisodes = async function () {
+		const res = await refetchEpisodes({
+			page: currentPage,
+			name: search,
+		});
+		setStoredEpisodes(res.data.episodes.results);
+		setCurrentPage(currentPage);
+		setCount(res.data.episodes.info.count);
+		setPages(res.data.episodes.info.pages);
+	};
+
 	/* LazyLoading der Queries */
 	const [, { refetch: refetchCharacters }] = useLazyQuery(
 		filterCharactersQuery,
@@ -102,6 +115,10 @@ export function useSearchQueries() {
 		},
 	});
 
+	const [, { refetch: refetchEpisodes }] = useLazyQuery(filterEpisodesQuery, {
+		variables: { page: currentPage, name: search },
+	});
+
 	/* Lädt die Lazy Queries und speichert die Werte im Zustand */
 	const queryAllCharacters = async () => {
 		const res = await refetchCharacters({ page: currentPage });
@@ -117,6 +134,13 @@ export function useSearchQueries() {
 		setCount(res.data.locations.info.count);
 		setPages(res.data.locations.info.pages);
 	};
+	const queryAllEpisodes = async () => {
+		const res = await refetchEpisodes({ page: currentPage });
+		setStoredEpisodes(res.data.episodes.results);
+		setCurrentPage(currentPage);
+		setCount(res.data.episodes.info.count);
+		setPages(res.data.episodes.info.pages);
+	};
 
 	const queryFilterCharacters = async () => {
 		const res = await refetchCharacters({ page: currentPage, name: search });
@@ -126,8 +150,10 @@ export function useSearchQueries() {
 		const res = await refetchLocations({ page: currentPage, name: search });
 		setStoredLocations(res.data.locations.results);
 	};
-
-	const currentSearchCategory = 'characters';
+	const queryFilterEpisodes = async () => {
+		const res = await refetchEpisodes({ page: currentPage, name: search });
+		setStoredEpisodes(res.data.episodes.results);
+	};
 
 	/* schaut in den currentSearchCategory und lädt dann die entsprechende Query */
 	const queryAll = () => {
@@ -138,6 +164,9 @@ export function useSearchQueries() {
 				break;
 			case SearchCategories.Locations:
 				queryAllLocations();
+				break;
+			case SearchCategories.Episodes:
+				queryAllEpisodes();
 				break;
 			default:
 				break;
@@ -161,6 +190,11 @@ export function useSearchQueries() {
 				setSearch(term);
 				queryFilterLocations();
 				break;
+			case SearchCategories.Episodes:
+				setCurrentSearchCommand(SearchCommands.FilterEpisodes);
+				setSearch(term);
+				queryFilterEpisodes();
+				break;
 			default:
 				console.log(currentSearchCategory);
 				break;
@@ -173,9 +207,17 @@ export function useSearchQueries() {
 				return characters.length > 0;
 			case SearchCategories.Locations:
 				return locations.length > 0;
+			case SearchCategories.Episodes:
+				return episodes.length > 0;
 			default:
 				return false;
 		}
+	};
+
+	/* Ändert den currentSearchCategory */
+	const changeCategory = (category) => {
+		setSearchCategory(category);
+		console.log(`changeCategory: ${category}`);
 	};
 
 	/* Ändert den currentPage */
@@ -187,6 +229,7 @@ export function useSearchQueries() {
 	return {
 		search,
 		setSearch,
+		changeCategory,
 		changePage,
 		queryAll,
 		filterAll,
