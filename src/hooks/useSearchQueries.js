@@ -56,6 +56,10 @@ export function useSearchQueries() {
 		saveFetchedLocations();
 	}, [search, locationType, dimension]);
 
+	useEffect(() => {
+		saveFetchedEpisodes();
+	}, [search]);
+
 	const saveFetchedCharacters = async function () {
 		const res = await refetchCharacters({
 			page: currentPage,
@@ -82,6 +86,17 @@ export function useSearchQueries() {
 		setCurrentPage(currentPage);
 		setCount(res.data.locations.info.count);
 		setPages(res.data.locations.info.pages);
+	};
+
+	const saveFetchedEpisodes = async function () {
+		const res = await refetchEpisodes({
+			page: currentPage,
+			name: search,
+		});
+		setStoredEpisodes(res.data.episodes.results);
+		setCurrentPage(currentPage);
+		setCount(res.data.episodes.info.count);
+		setPages(res.data.episodes.info.pages);
 	};
 
 	/* LazyLoading der Queries */

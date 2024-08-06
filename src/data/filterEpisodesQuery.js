@@ -13,6 +13,7 @@ export const filterEpisodesQuery = gql`
 				air_date
 				episode
 				characters {
+					id
 					name
 					status
 					species
