@@ -1,6 +1,9 @@
 /* Komponenten */
-@import './searchCategories.css';
 @import './searchClient.css';
+@import './searchCategories.css';
 @import './searchInput.css';
-@import './searchResult.css';
-@import './characterResultFilters.css';
+@import './searchResults.css';
+@import './radioGroup.css';
+@import './episodes.css';
+@import './locations.css';
+@import './characters.css';

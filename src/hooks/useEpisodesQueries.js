@@ -1,7 +1,7 @@
 import { useEpisodesStore } from './useEpisodesStore';
 import { useLazyQuery } from '@apollo/client';
 import { filterEpisodesQuery } from '../data/filterEpisodesQuery';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 /* Custom Hook für die Verwendung des Apollo Clients
  * verwendet den Hook für den Zustand als State Manager
@@ -9,8 +9,11 @@ import { useEffect } from 'react';
 export function useEpisodesQueries() {
 	/* Funktionen für den Zustand */
 	const setSearch = useEpisodesStore((state) => state.setSearch);
-	const setStoredEpisodes = useEpisodesStore(
-		(state) => state.setStoredEpisodes
+	const updateFilteredEpisodes = useEpisodesStore(
+		(state) => state.updateFilteredEpisodes
+	);
+	const addToStoredEpisodes = useEpisodesStore(
+		(state) => state.addToStoredEpisodes
 	);
 	const setPages = useEpisodesStore((state) => state.setPages);
 	const setCount = useEpisodesStore((state) => state.setCount);
@@ -18,72 +21,62 @@ export function useEpisodesQueries() {
 
 	/* Werte aus dem Zustand */
 	const search = useEpisodesStore((state) => state.search);
+	const pages = useEpisodesStore((state) => state.pages);
 	const episodes = useEpisodesStore((state) => state.episodes);
+	const count = useEpisodesStore((state) => state.count);
 
 	/* Diese Werte werden im Hook geändert */
 	let currentPage = useEpisodesStore((state) => state.currentPage);
 
-	/* Hook, damit die Suche neu ausgeführt wird, wenn
-	 * sich der Suchbegriff ändert */
+	/* Hook zum Laden aller Episoden */
+	const [loading, setLoading] = useState(false);
 	useEffect(() => {
-		saveFetchedEpisodes();
+		/* Am Ende, setze currentPage auf den Maximalwert zurück */
+		if (count != 0 && episodes.length === count) {
+			setCurrentPage(pages);
+			updateFilteredEpisodes();
+		}
+		/* Wenn es einen Count gibt, prüfe ob alle Episoden geladen wurden */
+		if ((count != 0 && episodes.length >= count) || loading) return;
+		setLoading(true);
+		/* verwendet den Apollo Client, um die Episoden der aktuellen Seite zu laden */
+		(async () => {
+			if (loading) return;
+			const res = await refetch({
+				page: currentPage,
+				name: search,
+			});
+			const newEpisodes = res.data.episodes.results;
+			addToStoredEpisodes(newEpisodes);
+			setLoading(false);
+			/* setzt die aktuelle Seite einen vor */
+			setCurrentPage(currentPage + 1);
+			/* count ist wichtig, um zu wissen, wann wir alle Episoden geladen haben */
+			/* startet auch den Hook neu */
+			setCount(res.data.episodes.info.count);
+			/* setzt die Gesamtanzahl der Seiten */
+			setPages(res.data.episodes.info.pages);
+		})();
+	}, [currentPage, count]);
+
+	/* Hook führt die Suche durch, wenn sich der Suchbegriff ändert */
+	useEffect(() => {
+		query();
 	}, [search]);
 
 	/* Lädt die Daten neu und speichert die Werte im Zustand */
-	const saveFetchedEpisodes = async function () {
-		const res = await refetchEpisodes({
-			page: currentPage,
-			name: search,
-		});
-		setStoredEpisodes(res.data.episodes.results);
-		setCurrentPage(currentPage);
-		setCount(res.data.episodes.info.count);
-		setPages(res.data.episodes.info.pages);
+	const query = function () {
+		updateFilteredEpisodes();
 	};
 
-	/* LazyLoading der Queries */
-	const [, { refetch: refetchEpisodes }] = useLazyQuery(filterEpisodesQuery, {
+	/* LazyLoading der Query */
+	const [, { refetch }] = useLazyQuery(filterEpisodesQuery, {
 		variables: { page: currentPage, name: search },
 	});
-
-	/* Lädt die Lazy Queries und speichert die Werte im Zustand */
-	const queryAllEpisodes = async () => {
-		const res = await refetchEpisodes({ page: currentPage });
-		setStoredEpisodes(res.data.episodes.results);
-		setCurrentPage(currentPage);
-		setCount(res.data.episodes.info.count);
-		setPages(res.data.episodes.info.pages);
-	};
-	const queryFilterEpisodes = async () => {
-		const res = await refetchEpisodes({ page: currentPage, name: search });
-		setStoredEpisodes(res.data.episodes.results);
-	};
-
-	/* filtert die Episodes entsprechend des Suchbegriffs */
-	const filterEpisodes = () => {
-		const term = document.querySelector('.search-input').value;
-		if (term.length < 2) return;
-		setSearch(term);
-		queryFilterEpisodes();
-	};
-
-	/* prüft, ob Ergebnisse vorhanden sind */
-	const hasResults = () => {
-		return episodes.length > 0;
-	};
-
-	/* Ändert den currentPage */
-	const changePage = (page) => {
-		currentPage = page;
-		console.log(`changePage: ${currentPage}`);
-	};
 
 	return {
 		search,
 		setSearch,
-		changePage,
-		queryAllEpisodes,
-		filterEpisodes,
-		hasResults,
+		query,
 	};
 }

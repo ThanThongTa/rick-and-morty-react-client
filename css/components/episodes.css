@@ -1,0 +1,9 @@
+.episode-list__section,
+.episode-images {
+	margin-block-end: 1em;
+}
+
+.list--episodes__radio-section,
+.episode-images__wrapper {
+	padding-block-end: 1em;
+}

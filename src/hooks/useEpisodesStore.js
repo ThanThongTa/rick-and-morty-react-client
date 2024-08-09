@@ -13,120 +13,117 @@ export const useEpisodesStore = create()(
 		currentPage: getInitialPage(),
 		currentlySelectedEpisode: getInitialCurrentlySelectedEpisode(),
 		episodes: getInitialEpisodes(),
+		filteredEpisodes: getFilteredEpisodes(),
+		/* filtered die Episoden noch mal und speichert das Ergebnis im Zustand */
+		updateFilteredEpisodes: () =>
+			set((state) => {
+				state.filteredEpisodes = getFilteredEpisodes();
+				updateLocaleStorage(state);
+			}),
 		/* speichert neue Episodes im Zustand und im LocalStorage */
 		setStoredEpisodes: (newEpisodes) =>
 			set((state) => {
 				state.episodes = newEpisodes;
-				localStorage.setItem(LocalStorageKeys.Episode, JSON.stringify(state));
+				updateLocaleStorage(state);
+			}),
+		addToStoredEpisodes: (newEpisodes) =>
+			set((state) => {
+				const currentIds = state.episodes.map((episode) => episode.id);
+				for (const newEpisode of newEpisodes) {
+					if (currentIds.includes(newEpisode.id)) continue;
+					state.episodes.push(newEpisode);
+				}
+				updateLocaleStorage(state);
 			}),
 		/* speichert die Suche im Zustand und im LocalStorage */
 		setSearch: (newSearch) =>
 			set((state) => {
 				state.search = newSearch;
-				localStorage.setItem(LocalStorageKeys.Episode, JSON.stringify(state));
+				state.currentPage = 1;
+				updateLocaleStorage(state);
 			}),
 		/* speichert die aktuelle Page im Zustand und im LocalStorage */
 		setCurrentPage: (newCurrentPage) =>
 			set((state) => {
 				state.currentPage = newCurrentPage;
-				localStorage.setItem(LocalStorageKeys.Episode, JSON.stringify(state));
+				updateLocaleStorage(state);
 			}),
 		/* speichert die Anzahl der Episodes im Zustand und im LocalStorage */
 		setCount: (newCount) =>
 			set((state) => {
 				state.count = newCount;
-				localStorage.setItem(LocalStorageKeys.Episode, JSON.stringify(state));
+				updateLocaleStorage(state);
 			}),
 		/* speichert die Anzahl der Pages im Zustand und im LocalStorage */
 		setPages: (newPages) =>
 			set((state) => {
 				state.pages = newPages;
-				localStorage.setItem(LocalStorageKeys.Episode, JSON.stringify(state));
+				updateLocaleStorage(state);
 			}),
 		/* speichert die ID der aktuellen Episode im Zustand und im LocalStorage */
 		setCurrentlySelectedEpisode: (newCurrentlySelectedEpisode) =>
 			set((state) => {
 				state.currentlySelectedEpisode = newCurrentlySelectedEpisode;
-				localStorage.setItem(LocalStorageKeys.Episode, JSON.stringify(state));
+				updateLocaleStorage(state);
 			}),
 	}))
 );
 
-/* Lädt die gespeicherten Episodes aus dem LocalStorage
- */
-function getInitialEpisodes() {
+function updateLocaleStorage(state) {
+	localStorage.setItem(LocalStorageKeys.Episode, JSON.stringify(state));
+}
+
+function loadLocaleStorage() {
 	try {
 		const search = JSON.parse(
 			localStorage.getItem(LocalStorageKeys.Episode) || '[]'
 		);
-		return search.episodes ?? [];
+		return search;
 	} catch (error) {
 		console.log(error);
 		return [];
 	}
 }
 
+/* Lädt die gespeicherten Episodes aus dem LocalStorage
+ */
+function getInitialEpisodes() {
+	return loadLocaleStorage().episodes ?? [];
+}
+
 /* Lädt den gespeicherten Suchbegriff aus dem LocalStorage */
 function getInitialSearch() {
-	try {
-		const search = JSON.parse(
-			localStorage.getItem(LocalStorageKeys.Episode) || '[]'
-		);
-		return search.search ?? '';
-	} catch (error) {
-		console.log(error);
-		return '';
-	}
+	return loadLocaleStorage().search ?? '';
 }
 
 /* Lädt die gespeicherte aktuelle Page aus dem LocalStorage */
 function getInitialPage() {
-	try {
-		const search = JSON.parse(
-			localStorage.getItem(LocalStorageKeys.Episode) || '[]'
-		);
-		return search.currentPage ?? 1;
-	} catch (error) {
-		console.log(error);
-		return 1;
-	}
+	return loadLocaleStorage().currentPage ?? 1;
 }
 
 /* Lädt die gespeicherte Anzahl der Episodes aus dem LocalStorage */
 function getInitialCount() {
-	try {
-		const search = JSON.parse(
-			localStorage.getItem(LocalStorageKeys.Episode) || '[]'
-		);
-		return search.count ?? 0;
-	} catch (error) {
-		console.log(error);
-		return 0;
-	}
+	return loadLocaleStorage().count ?? 0;
 }
 
 /* Lädt die gespeicherte Anzahl der gesamten Pages aus dem LocalStorage */
 function getInitialPages() {
-	try {
-		const search = JSON.parse(
-			localStorage.getItem(LocalStorageKeys.Episode) || '[]'
-		);
-		return search.pages ?? 1;
-	} catch (error) {
-		console.log(error);
-		return 1;
-	}
+	return loadLocaleStorage().pages ?? 1;
 }
 
 /* Lädt die ID der aktuellen Episode aus dem LocalStorage */
 function getInitialCurrentlySelectedEpisode() {
-	try {
-		const search = JSON.parse(
-			localStorage.getItem(LocalStorageKeys.Episode) || '[]'
-		);
-		return search.currentlySelectedEpisode ?? null;
-	} catch (error) {
-		console.log(error);
-		return null;
-	}
+	return loadLocaleStorage().currentlySelectedEpisode ?? null;
+}
+
+/* Filtert die Episoden nach dem gespeicherten Suchbegriff */
+function getFilteredEpisodes() {
+	const search = loadLocaleStorage();
+
+	if (!search.episodes) return [];
+	if (!search.search) return search.episodes;
+
+	return search.episodes.filter((episode) =>
+		episode.name.toLowerCase().includes(search.search.toLowerCase())
+	);
 }

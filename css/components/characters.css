@@ -1,0 +1,9 @@
+.filters--species__radio-section,
+.filters--types__radio-section,
+.list--characters__radio-section {
+	padding-block-end: 1em;
+}
+
+.list--characters__radio-group {
+	padding-block-end: 1em;
+}

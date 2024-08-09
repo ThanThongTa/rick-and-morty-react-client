@@ -1,0 +1,16 @@
+.filters--dimensions__radio-section,
+.list--locations__radio-section {
+	padding-block-end: 1em;
+}
+
+.list--locations__radio-group {
+	padding-block-end: 1em;
+}
+
+.location-images {
+	margin-block-end: 1em;
+}
+
+.location-images__wrapper {
+	padding-block-end: 1em;
+}

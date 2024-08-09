@@ -15,158 +15,156 @@ export const useLocationsStore = create()(
 		currentlySelectedLocation: getInitialCurrentlySelectedLocation(),
 		currentlySelectedDimension: getInitialCurrentlySelectedDimension(),
 		locations: getInitialLocations(),
+		filteredLocations: getFilteredLocations(),
+		/* filtered die Locations noch mal und speichert das Ergebnis im Zustand */
+		updateFilteredLocations: () =>
+			set((state) => {
+				state.filteredLocations = getFilteredLocations();
+				updateLocaleStorage(state);
+			}),
+		/* speichert neue Locations im Zustand und im LocalStorage */
+		addToStoredLocations: (newLocations) =>
+			set((state) => {
+				const currentIds = state.locations.map((location) => location.id);
+				for (const newLocation of newLocations) {
+					if (currentIds.includes(newLocation.id)) continue;
+					state.locations.push(newLocation);
+				}
+				updateLocaleStorage(state);
+			}),
 		/* speichert neue Locations im Zustand und im LocalStorage */
 		setStoredLocations: (newLocations) =>
 			set((state) => {
 				state.locations = newLocations;
-				localStorage.setItem(LocalStorageKeys.Location, JSON.stringify(state));
+				updateLocaleStorage(state);
 			}),
 		/* speichert die Suche im Zustand und im LocalStorage */
 		setSearch: (newSearch) =>
 			set((state) => {
 				state.search = newSearch;
-				localStorage.setItem(LocalStorageKeys.Location, JSON.stringify(state));
+				updateLocaleStorage(state);
 			}),
 		/* speichert die aktuelle Page im Zustand und im LocalStorage */
 		setCurrentPage: (newCurrentPage) =>
 			set((state) => {
 				state.currentPage = newCurrentPage;
-				localStorage.setItem(LocalStorageKeys.Location, JSON.stringify(state));
+				updateLocaleStorage(state);
 			}),
 		/* speichert die Anzahl der Locations im Zustand und im LocalStorage */
 		setCount: (newCount) =>
 			set((state) => {
 				state.count = newCount;
-				localStorage.setItem(LocalStorageKeys.Location, JSON.stringify(state));
+				updateLocaleStorage(state);
 			}),
 		/* speichert die Anzahl der Pages im Zustand und im LocalStorage */
 		setPages: (newPages) =>
 			set((state) => {
 				state.pages = newPages;
-				localStorage.setItem(LocalStorageKeys.Location, JSON.stringify(state));
+				updateLocaleStorage(state);
 			}),
 		/* speichert den Type der aktuellen Location im Zustand und im LocalStorage */
 		setCurrentlySelectedType: (newCurrentlySelectedType) =>
 			set((state) => {
 				state.currentlySelectedType = newCurrentlySelectedType;
-				localStorage.setItem(LocalStorageKeys.Location, JSON.stringify(state));
+				updateLocaleStorage(state);
 			}),
 		/* speichert die ID der aktuellen Location im Zustand und im LocalStorage */
 		setCurrentlySelectedLocation: (newCurrentlySelectedLocation) =>
 			set((state) => {
 				state.currentlySelectedLocation = newCurrentlySelectedLocation;
-				localStorage.setItem(LocalStorageKeys.Location, JSON.stringify(state));
+				updateLocaleStorage(state);
 			}),
 		/* speichert die Dimension der aktuellen Location im Zustand und im LocalStorage */
 		setCurrentlySelectedDimension: (newCurrentlySelectedDimension) =>
 			set((state) => {
 				state.currentlySelectedDimension = newCurrentlySelectedDimension;
-				localStorage.setItem(LocalStorageKeys.Location, JSON.stringify(state));
+				updateLocaleStorage(state);
 			}),
 	}))
 );
 
-/* Lädt die gespeicherten Locations aus dem LocalStorage
- */
-function getInitialLocations() {
+function updateLocaleStorage(state) {
+	localStorage.setItem(LocalStorageKeys.Location, JSON.stringify(state));
+}
+
+function loadLocaleStorage() {
 	try {
 		const search = JSON.parse(
 			localStorage.getItem(LocalStorageKeys.Location) || '[]'
 		);
-		return search.locations ?? [];
+		return search;
 	} catch (error) {
 		console.log(error);
 		return [];
 	}
 }
 
+/* Lädt die gespeicherten Locations aus dem LocalStorage
+ */
+function getInitialLocations() {
+	return loadLocaleStorage().locations ?? [];
+}
+
 /* Lädt den gespeicherten Suchbegriff aus dem LocalStorage */
 function getInitialSearch() {
-	try {
-		const search = JSON.parse(
-			localStorage.getItem(LocalStorageKeys.Location) || '[]'
-		);
-		return search.search ?? '';
-	} catch (error) {
-		console.log(error);
-		return '';
-	}
+	return loadLocaleStorage().search ?? '';
 }
 
 /* Lädt die gespeicherte aktuelle Page aus dem LocalStorage */
 function getInitialPage() {
-	try {
-		const search = JSON.parse(
-			localStorage.getItem(LocalStorageKeys.Location) || '[]'
-		);
-		return search.currentPage ?? 1;
-	} catch (error) {
-		console.log(error);
-		return 1;
-	}
+	return loadLocaleStorage().currentPage ?? 1;
 }
 
 /* Lädt die gespeicherte Anzahl der Locations aus dem LocalStorage */
 function getInitialCount() {
-	try {
-		const search = JSON.parse(
-			localStorage.getItem(LocalStorageKeys.Location) || '[]'
-		);
-		return search.count ?? 0;
-	} catch (error) {
-		console.log(error);
-		return 0;
-	}
+	return loadLocaleStorage().count ?? 0;
 }
 
 /* Lädt die gespeicherte Anzahl der gesamten Pages aus dem LocalStorage */
 function getInitialPages() {
-	try {
-		const search = JSON.parse(
-			localStorage.getItem(LocalStorageKeys.Location) || '[]'
-		);
-		return search.pages ?? 1;
-	} catch (error) {
-		console.log(error);
-		return 1;
-	}
+	return loadLocaleStorage().pages ?? 1;
 }
 
 /* Lädt den ausgewählten Type aus dem LocalStorage */
 function getInitialCurrentlySelectedType() {
-	try {
-		const search = JSON.parse(
-			localStorage.getItem(LocalStorageKeys.Location) || '[]'
-		);
-		return search.currentlySelectedType ?? 'all';
-	} catch (error) {
-		console.log(error);
-		return null;
-	}
+	return loadLocaleStorage().currentlySelectedType ?? 'all';
 }
 
 /* Lädt die ausgewählte ID aus dem LocalStorage */
 function getInitialCurrentlySelectedLocation() {
-	try {
-		const search = JSON.parse(
-			localStorage.getItem(LocalStorageKeys.Location) || '[]'
-		);
-		return search.currentlySelectedLocation ?? null;
-	} catch (error) {
-		console.log(error);
-		return null;
-	}
+	return loadLocaleStorage().currentlySelectedLocation ?? null;
 }
 
 /* Lädt die ausgewählte Dimension aus dem LocalStorage */
 function getInitialCurrentlySelectedDimension() {
-	try {
-		const search = JSON.parse(
-			localStorage.getItem(LocalStorageKeys.Location) || '[]'
+	return loadLocaleStorage().currentlySelectedDimension ?? 'all';
+}
+
+/* Filtert die Episoden nach dem gespeicherten Suchbegriff */
+function getFilteredLocations() {
+	const search = loadLocaleStorage();
+	const noSearchTerm = !search.search || search.search === '';
+	const noTypeFilter =
+		!search.currentlySelectedType || search.currentlySelectedType === 'all';
+	const noDimensionFilter =
+		!search.currentlySelectedDimension ||
+		search.currentlySelectedDimension === 'all';
+
+	if (!search.locations) return [];
+
+	return search.locations
+		.filter(
+			(location) =>
+				noSearchTerm ||
+				location.name.toLowerCase().includes(search.search.toLowerCase())
+		)
+		.filter(
+			(location) =>
+				noTypeFilter || location.type === search.currentlySelectedType
+		)
+		.filter(
+			(location) =>
+				noDimensionFilter ||
+				location.dimension === search.currentlySelectedDimension
 		);
-		return search.currentlySelectedDimension ?? 'all';
-	} catch (error) {
-		console.log(error);
-		return 'all';
-	}
 }
