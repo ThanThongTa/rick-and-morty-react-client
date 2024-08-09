@@ -3,3 +3,7 @@
 	padding-inline-start: var(--padding-s);
 	outline-color: var(--theme-accent-color);
 }
+
+.search-inputs__label {
+	font-weight: var(--font-weight-1);
+}
