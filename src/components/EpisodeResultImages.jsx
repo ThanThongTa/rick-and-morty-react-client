@@ -11,24 +11,28 @@ export default function EpisodeResultImages() {
 	);
 	return (
 		selectedEpisode && (
-			<section className="episode-images section-wrapper">
+			<section className="episode-images__section-wrapper section-wrapper">
 				<span className="episode-images__heading section-label">
 					Characters in Episode{' '}
 					<span className="episode__label">{selectedEpisode.episode}</span>
 				</span>
-				<section className="episode-images__wrapper">
-					{selectedEpisode.characters &&
-						selectedEpisode.characters.map((character) => (
-							<section key={character.id} className="episode-images__item">
-								<img
-									className="episode-image"
-									key={character.id}
-									src={character.image}
-									alt={character.name}
-								/>
-								{character.name}
-							</section>
-						))}
+				<section className="episode-images">
+					<section className="episode-images__wrapper">
+						{selectedEpisode.characters &&
+							selectedEpisode.characters.map((character) => (
+								<section key={character.id} className="episode-images__item">
+									<img
+										className="episode-image"
+										key={character.id}
+										src={character.image}
+										alt={character.name}
+									/>
+									<section className="episode-image__name">
+										{character.name}
+									</section>
+								</section>
+							))}
+					</section>
 				</section>
 			</section>
 		)

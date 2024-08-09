@@ -11,7 +11,9 @@ export default function SearchCategories() {
 			defaultValue={'characters'}
 			onChange={(value) => changeCategory(value)}
 		>
-			<Label className="search-categories__label">Search Categories:</Label>
+			<section className="search-categories__label-section label-section">
+				<Label className="search-categories__label">Search Categories</Label>
+			</section>
 			<Radio
 				value="characters"
 				className="search-categories__radio search-radio"

@@ -7,3 +7,43 @@
 .episode-images__wrapper {
 	padding-block-end: 1em;
 }
+
+.list--episodes__label {
+	font-weight: var(--font-weight-1);
+}
+
+.episode-images {
+	scrollbar-color: var(--blue-5) var(--blue-10);
+}
+
+.episode__label {
+	gap: 1rem;
+}
+
+.episode-images__item {
+	background-color: var(--blue-10);
+	border-radius: var(--border-radius-l);
+	overflow: clip;
+}
+
+.episode-image__name {
+	padding: 0.5em;
+}
+
+.episode-details__heading {
+	font-weight: var(--font-weight-1);
+}
+
+.episode-details__label,
+.episode-images__heading {
+	font-weight: var(--font-weight-1);
+}
+
+.episode-details__value,
+.episode__label {
+	font-weight: var(--font-weight-6);
+}
+
+.episode-image__name {
+	font-weight: var(--font-weight-3);
+}

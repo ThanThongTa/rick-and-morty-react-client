@@ -1,24 +1,12 @@
 .image-radio,
 .text-radio,
 .search-radio {
-	border: 0.143rem solid var(--border-color);
-
-	&[data-pressed]:before {
-		border-color: var(--border-color-pressed);
-	}
+	border-radius: var(--border-radius-l);
+	background-color: var(--card-background, var(--content-background));
 
 	&[data-selected] {
-		border-color: var(--highlight-background);
-		border-width: 0.429rem;
-
-		&[data-pressed]:before {
-			border-color: var(--highlight-background-pressed);
-		}
-	}
-
-	&[data-focus-visible]:before {
-		outline: 2px solid var(--focus-ring-color);
-		outline-offset: 2px;
+		background-color: var(--card-background-highlight);
+		font-weight: var(--font-weight-7);
 	}
 }
 
@@ -30,6 +18,12 @@
 	color: var(--text-color);
 	forced-color-adjust: none;
 	padding: 0.5em;
+	background-color: var(--teal-12);
+	color: var(--teal-9);
+	&[data-selected] {
+		background-color: var(--teal-9);
+		color: var(--teal-1);
+	}
 }
 
 .image-radio {
@@ -47,6 +41,7 @@
 
 .radio-group {
 	display: grid;
+	width: 100%;
 }
 
 .label-section {
@@ -59,9 +54,12 @@
 	display: flex;
 	gap: 1rem;
 	margin-block-start: 1rem;
+	padding-inline-start: 10em;
 	overflow-y: auto;
 	scrollbar-gutter: stable;
 	min-height: 4rem;
+	width: 100%;
+	position: relative;
 }
 
 .image-radio-section,
@@ -71,6 +69,10 @@
 	gap: 1em;
 	overflow-y: auto;
 	scrollbar-gutter: stable;
+	width: 100%;
+	position: relative;
+	padding-inline-start: 0.5em;
+	padding-block-start: 0.5em;
 }
 
 .image-radio-section {
