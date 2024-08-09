@@ -1,4 +1,3 @@
-import { Heading, Label } from 'react-aria-components';
 import { useLocationsStore } from '../hooks/useLocationsStore';
 
 /* Komponente für die Details der ausgewählten Location */
@@ -8,28 +7,38 @@ export default function LocationResultDetails() {
 		(state) => state.currentlySelectedLocation
 	);
 	/* ermitteln der ausgewählten Location */
-	const locations = useLocationsStore((state) => state.locations);
+	const locations = useLocationsStore((state) => state.filteredLocations);
 	const selectedLocation = locations.find(
 		(location) => location.id === selectedLocationId
 	);
 
 	return (
 		selectedLocation && (
-			<section className="location-details-wrapper">
-				<Heading level="4">Location Details</Heading>
+			<section className="location-details-wrapper section-wrapper">
+				<span className="location-details__heading section-label">
+					Location Details
+				</span>
 				<section className="location-details">
 					<p>
-						<Label>Name: </Label>
-						{selectedLocation.name}
+						<span className={'location-details__label'}>Name: </span>
+						<span className={'location-details__value'}>
+							{selectedLocation.name}
+						</span>
 					</p>
 					<p>
-						<Label>Type: </Label>
-						{selectedLocation.type}
+						<span className={'location-details__label'}>Type: </span>
+						<span className={'location-details__value'}>
+							{selectedLocation.type}
+						</span>
 					</p>
-					<p>
-						<Label>Dimension: </Label>
-						{selectedLocation.dimension}
-					</p>
+					{selectedLocation.dimension && (
+						<p>
+							<span className={'location-details__label'}>Dimension: </span>
+							<span className={'location-details__value'}>
+								{selectedLocation.dimension}
+							</span>
+						</p>
+					)}
 				</section>
 			</section>
 		)

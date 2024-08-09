@@ -1,6 +1,5 @@
 import { SearchCategories } from '../globals/SearchCategories';
 import { useSearchCategoryStore } from '../hooks/useSearchCategoryStore';
-import CharacterResultImages from './CharacterResultImages';
 import LocationResultImages from './LocationResultImages';
 import EpisodeResultImages from './EpisodeResultImages';
 
@@ -11,14 +10,16 @@ export default function SearchResultImages() {
 	);
 
 	return (
-		<section className="search-results__images search-results__section">
-			{searchCategory === SearchCategories.Characters && (
-				<CharacterResultImages />
-			)}
-			{searchCategory === SearchCategories.Locations && (
-				<LocationResultImages />
-			)}
-			{searchCategory === SearchCategories.Episodes && <EpisodeResultImages />}
-		</section>
+		(searchCategory === SearchCategories.Locations ||
+			searchCategory === SearchCategories.Episodes) && (
+			<section className="search-results__images search-results__section">
+				{searchCategory === SearchCategories.Locations && (
+					<LocationResultImages />
+				)}
+				{searchCategory === SearchCategories.Episodes && (
+					<EpisodeResultImages />
+				)}
+			</section>
+		)
 	);
 }

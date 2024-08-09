@@ -1,6 +1,4 @@
-import React from 'react';
 import { useEpisodesStore } from '../hooks/useEpisodesStore';
-import { Heading } from 'react-aria-components';
 
 /* Komponente für die Anzeige der Bilder der ausgewählten Episode */
 export default function EpisodeResultImages() {
@@ -13,20 +11,25 @@ export default function EpisodeResultImages() {
 	);
 	return (
 		selectedEpisode && (
-			<section className="episode-images">
-				<Heading level="4">
-					Characters in Episode {selectedEpisode.episode}
-				</Heading>
-				{selectedEpisode.characters &&
-					selectedEpisode.characters.map((character) => (
-						<img
-							key={character.id}
-							src={character.image}
-							alt={character.name}
-							width={40}
-							height={40}
-						/>
-					))}
+			<section className="episode-images section-wrapper">
+				<span className="episode-images__heading section-label">
+					Characters in Episode{' '}
+					<span className="episode__label">{selectedEpisode.episode}</span>
+				</span>
+				<section className="episode-images__wrapper">
+					{selectedEpisode.characters &&
+						selectedEpisode.characters.map((character) => (
+							<section key={character.id} className="episode-images__item">
+								<img
+									className="episode-image"
+									key={character.id}
+									src={character.image}
+									alt={character.name}
+								/>
+								{character.name}
+							</section>
+						))}
+				</section>
 			</section>
 		)
 	);

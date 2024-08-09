@@ -1,9 +1,8 @@
-/* Komponente für die Anzeige von Details der Suchergebnisse */
 import { SearchCategories } from '../globals/SearchCategories';
+import { useSearchCategoryStore } from '../hooks/useSearchCategoryStore';
 import CharacterResultDetails from './CharacterResultDetails';
 import LocationResultDetails from './LocationResultDetails';
 import EpisodeResultDetails from './EpisodeResultDetails';
-import { useSearchCategoryStore } from '../hooks/useSearchCategoryStore';
 
 /* Komponente für die Anzeige von Details der Suchergebnisse */
 export default function SearchResultDetails() {

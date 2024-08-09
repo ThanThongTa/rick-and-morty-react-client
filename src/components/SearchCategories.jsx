@@ -12,13 +12,19 @@ export default function SearchCategories() {
 			onChange={(value) => changeCategory(value)}
 		>
 			<Label className="search-categories__label">Search Categories:</Label>
-			<Radio value="characters" className="search-categories__radio">
+			<Radio
+				value="characters"
+				className="search-categories__radio search-radio"
+			>
 				Characters
 			</Radio>
-			<Radio value="locations" className="search-categories__radio">
+			<Radio
+				value="locations"
+				className="search-categories__radio search-radio"
+			>
 				Locations
 			</Radio>
-			<Radio value="episodes" className="search-categories__radio">
+			<Radio value="episodes" className="search-categories__radio search-radio">
 				Episodes
 			</Radio>
 		</RadioGroup>

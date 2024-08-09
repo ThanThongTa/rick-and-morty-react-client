@@ -1,8 +1,8 @@
 import { SearchCategories } from '../globals/SearchCategories';
+import { useSearchCategoryStore } from '../hooks/useSearchCategoryStore';
 import CharacterResultList from './CharacterResultList';
 import LocationResultList from './LocationResultList';
 import EpisodeResultList from './EpisodeResultList';
-import { useSearchCategoryStore } from '../hooks/useSearchCategoryStore';
 
 /* Komponente für die Anzeige der Suchergebnisse als Liste */
 export default function SearchResultList() {

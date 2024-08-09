@@ -1,22 +1,22 @@
-import {
-	Button,
-	Heading,
-	Label,
-	ListBox,
-	ListBoxItem,
-	Popover,
-	Select,
-	SelectValue,
-} from 'react-aria-components';
 import { useCharactersStore } from '../hooks/useCharactersStore';
+import SearchRadioGroup from './SearchRadioGroup';
 
 /* Komponente für die Einstellungen der Charaktersuche */
 export default function CharacterResultFilters() {
-	const characters = useCharactersStore((state) => state.characters);
-	/* Ermitteln der Werte für die Species */
-	const species = new Set(characters.map((character) => character.species));
-	/* Ermitteln der Werte für den Type */
-	const types = new Set(characters.map((character) => character.type));
+	const characters = useCharactersStore((state) => state.filteredCharacters);
+	/* Ermitteln der Werte für die Species und Types */
+	const species = Array.from(
+		new Set(characters.map((character) => character.species))
+	);
+	const types = Array.from(
+		new Set(characters.map((character) => character.type))
+	);
+	const status = Array.from(
+		new Set(characters.map((character) => character.status))
+	);
+	const genders = Array.from(
+		new Set(characters.map((character) => character.gender))
+	);
 
 	/* Ermitteln der ausgewählten Werte aus Zustand */
 	const selectedGender = useCharactersStore(
@@ -25,13 +25,16 @@ export default function CharacterResultFilters() {
 	const selectedStatus = useCharactersStore(
 		(state) => state.currentlySelectedStatus
 	);
-	const selectedType = useCharactersStore(
-		(state) => state.currentlySelectedType
-	);
 	const selectedSpecies = useCharactersStore(
 		(state) => state.currentlySelectedSpecies
 	);
+	const selectedType = useCharactersStore(
+		(state) => state.currentlySelectedType
+	);
 	/* Ermitteln der Set-Funktionen aus Zustand */
+	const setSelectedType = useCharactersStore(
+		(state) => state.setCurrentlySelectedType
+	);
 	const setSelectedGender = useCharactersStore(
 		(state) => state.setCurrentlySelectedGender
 	);
@@ -41,105 +44,45 @@ export default function CharacterResultFilters() {
 	const setSelectedSpecies = useCharactersStore(
 		(state) => state.setCurrentlySelectedSpecies
 	);
-	const setSelectedType = useCharactersStore(
-		(state) => state.setCurrentlySelectedType
-	);
 
 	return (
-		<section className="character-filters-wrapper">
-			<Heading level="4">Character Filters</Heading>
-			{/* Select für die Species */}
-			<Select
-				onSelectionChange={setSelectedSpecies}
-				selectedKey={selectedSpecies}
-			>
-				<Label>Species</Label>
-				<Button>
-					<SelectValue />
-					<span aria-hidden="true">▼</span>
-				</Button>
-				<Popover>
-					<ListBox>
-						<ListBoxItem id="all" textValue="all">
-							all
-						</ListBoxItem>
-						{Array.from(species).map(
-							(species) =>
-								species && (
-									<ListBoxItem key={species} id={species}>
-										{species}
-									</ListBoxItem>
-								)
-						)}
-					</ListBox>
-				</Popover>
-			</Select>
-			{/* Ende Select für die Species */}
-			{/* Select für den Type */}
-			<Select onSelectionChange={setSelectedType} selectedKey={selectedType}>
-				<Label>Type</Label>
-				<Button>
-					<SelectValue />
-					<span aria-hidden="true">▼</span>
-				</Button>
-				<Popover>
-					<ListBox>
-						<ListBoxItem id="all" textValue="all">
-							all
-						</ListBoxItem>
-						{Array.from(types).map(
-							(type) =>
-								type && (
-									<ListBoxItem key={type} id={type}>
-										{type}
-									</ListBoxItem>
-								)
-						)}
-					</ListBox>
-				</Popover>
-			</Select>
-			{/* Ende Select für den Type */}
-			{/* Select für den Status */}
-			<Select
-				onSelectionChange={setSelectedStatus}
-				selectedKey={selectedStatus}
-			>
-				<Label>Status</Label>
-				<Button>
-					<SelectValue />
-					<span aria-hidden="true">▼</span>
-				</Button>
-				<Popover>
-					<ListBox>
-						<ListBoxItem id="all">all</ListBoxItem>
-						<ListBoxItem id="alive">alive</ListBoxItem>
-						<ListBoxItem id="dead">dead</ListBoxItem>
-						<ListBoxItem id="unknown">unknown</ListBoxItem>
-					</ListBox>
-				</Popover>
-			</Select>
-			{/* Ende Select für den Status */}
-			{/* Select für den Gender */}
-			<Select
-				onSelectionChange={setSelectedGender}
-				selectedKey={selectedGender}
-			>
-				<Label>Gender</Label>
-				<Button>
-					<SelectValue />
-					<span aria-hidden="true">▼</span>
-				</Button>
-				<Popover>
-					<ListBox>
-						<ListBoxItem id="all">all</ListBoxItem>
-						<ListBoxItem id="female">female</ListBoxItem>
-						<ListBoxItem id="male">male</ListBoxItem>
-						<ListBoxItem id="genderless">genderless</ListBoxItem>
-						<ListBoxItem id="unknown">unknown</ListBoxItem>
-					</ListBox>
-				</Popover>
-			</Select>
-			{/* Ende Select für den Gender */}
+		<section className="character-filters-wrapper section-wrapper">
+			<span className="character-filters__heading section-label">
+				Character Filters
+			</span>
+			{/* Radio-Group für die Species */}
+			<SearchRadioGroup
+				sectionName="Species"
+				defaultValue={selectedSpecies}
+				onChange={setSelectedSpecies}
+				list={species}
+			/>
+			{/* Ende Radio-Group für die Species */}
+
+			{/* Radio-Group für die Types der Locations */}
+			<SearchRadioGroup
+				sectionName="Types"
+				defaultValue={selectedType}
+				onChange={setSelectedType}
+				list={types}
+			/>
+			{/* Ende Radio-Group für die Types der Locations */}
+			{/* Radio-Group für den Status */}
+			<SearchRadioGroup
+				sectionName="Status"
+				defaultValue={selectedStatus}
+				onChange={setSelectedStatus}
+				list={status}
+			/>
+			{/* Ende Radio-Group für den Status */}
+			{/* Radio-Group für den Gender */}
+			<SearchRadioGroup
+				sectionName="Gender"
+				defaultValue={selectedGender}
+				onChange={setSelectedGender}
+				list={genders}
+			/>
+			{/* Ende Radio-Group für den Gender */}
 		</section>
 	);
 }

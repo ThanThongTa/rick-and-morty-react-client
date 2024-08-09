@@ -1,12 +1,11 @@
-import React from 'react';
 import { useLocationsStore } from '../hooks/useLocationsStore';
-import { Heading } from 'react-aria-components';
 
+/* Komponente für die Bilder der Residents der ausgewählten Location */
 export default function LocationResultImages() {
 	const selectedLocationId = useLocationsStore(
 		(state) => state.currentlySelectedLocation
 	);
-	const locations = useLocationsStore((state) => state.locations);
+	const locations = useLocationsStore((state) => state.filteredLocations);
 	const selectedLocation = locations.find(
 		(location) => location.id === selectedLocationId
 	);
@@ -14,17 +13,24 @@ export default function LocationResultImages() {
 	return (
 		selectedLocation &&
 		selectedLocation.residents && (
-			<section className="location-images">
-				<Heading level="4">Residents of {selectedLocation.name}</Heading>
-				{selectedLocation.residents.map((character) => (
-					<img
-						key={character.id}
-						src={character.image}
-						alt={character.name}
-						width={40}
-						height={40}
-					/>
-				))}
+			<section className="location-images section-wrapper">
+				<span className="location-images__heading section-label">
+					Residents of{' '}
+					<span className="location__name">{selectedLocation.name}</span>
+				</span>
+				<section className="location-images__wrapper">
+					{selectedLocation.residents.map((character) => (
+						<section key={character.id} className="location-images__item">
+							<img
+								className="location-image"
+								key={character.id}
+								src={character.image}
+								alt={character.name}
+							/>
+							{character.name}
+						</section>
+					))}
+				</section>
 			</section>
 		)
 	);

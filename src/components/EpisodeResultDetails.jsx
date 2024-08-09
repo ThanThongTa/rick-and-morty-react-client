@@ -1,4 +1,3 @@
-import { Heading, Label } from 'react-aria-components';
 import { useEpisodesStore } from '../hooks/useEpisodesStore';
 
 /* Komponente für die Anzeige der Episode Details */
@@ -15,20 +14,28 @@ export default function EpisodeResultDetails() {
 
 	return (
 		selectedEpisode && (
-			<section className="episode-details-wrapper">
-				<Heading level="4">Episode Details</Heading>
+			<section className="episode-details-wrapper section-wrapper">
+				<span className="episode-details__heading section-label">
+					Episode Details
+				</span>
 				<section className="episode-details">
 					<p>
-						<Label>Name: </Label>
-						{selectedEpisode.name}
+						<span className={'episode-details__label'}>Name: </span>
+						<span className={'episode-details__value'}>
+							{selectedEpisode.name}
+						</span>
 					</p>
 					<p>
-						<Label>Air Date: </Label>
-						{selectedEpisode.air_date}
+						<span className={'episode-details__label'}>Air Date: </span>
+						<span className={'episode-details__value'}>
+							{selectedEpisode.air_date}
+						</span>
 					</p>
 					<p>
-						<Label>Episode: </Label>
-						{selectedEpisode.episode}
+						<span className={'episode-details__label'}>Episode: </span>
+						<span className={'episode-details__value'}>
+							{selectedEpisode.episode}
+						</span>
 					</p>
 				</section>
 			</section>

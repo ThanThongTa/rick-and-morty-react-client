@@ -1,5 +1,6 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-import { Heading, SearchField } from 'react-aria-components';
+import { Heading } from 'react-aria-components';
+
 import SearchResult from './SearchResult';
 import SearchInput from './SearchInput';
 import SearchCategories from './SearchCategories';
@@ -17,10 +18,8 @@ export default function SearchClient() {
 				Rick and Morty DB
 			</Heading>
 			<ApolloProvider client={client}>
-				<SearchField role="search" className="search-form">
-					<SearchCategories />
-					<SearchInput />
-				</SearchField>
+				<SearchCategories />
+				<SearchInput />
 				<SearchResult />
 			</ApolloProvider>
 		</section>

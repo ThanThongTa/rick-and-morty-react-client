@@ -1,4 +1,3 @@
-import { Heading, Label } from 'react-aria-components';
 import { useCharactersStore } from '../hooks/useCharactersStore';
 
 /* Komponente für die Anzeige der Details eines Charakters */
@@ -7,7 +6,7 @@ export default function CharacterResultDetails() {
 	const selectedCharacterId = useCharactersStore(
 		(state) => state.currentlySelectedCharacter
 	);
-	const characters = useCharactersStore((state) => state.characters);
+	const characters = useCharactersStore((state) => state.filteredCharacters);
 	/* ermitteln des ausgewählten Charakters */
 	const selectedCharacter = characters.find(
 		(character) => character.id === selectedCharacterId
@@ -16,42 +15,58 @@ export default function CharacterResultDetails() {
 	return (
 		<>
 			{selectedCharacter && (
-				<section className="character-details-wrapper">
-					<Heading level="4">Character Details</Heading>
+				<section className="character-details-wrapper section-wrapper">
+					<span className="character-details__heading section-label">
+						Character Details
+					</span>
 					<section className="character-details">
 						<img src={selectedCharacter.image} alt={selectedCharacter.name} />
 						<p>
-							<Label>Name: </Label>
-							{selectedCharacter.name}
+							<span className={'character-details__label'}>Name: </span>
+							<span className={'character-details__value'}>
+								{selectedCharacter.name}
+							</span>
 						</p>
 						<p>
-							<Label>Status: </Label>
-							{selectedCharacter.status}
+							<span className={'character-details__label'}>Status: </span>
+							<span className={'character-details__value'}>
+								{selectedCharacter.status}
+							</span>
 						</p>
 						<p>
-							<Label>Species: </Label>
-							{selectedCharacter.species}
+							<span className={'character-details__label'}>Species: </span>
+							<span className={'character-details__value'}>
+								{selectedCharacter.species}
+							</span>
 						</p>
 						{selectedCharacter.type && (
 							<p>
-								<Label>Type: </Label>
-								{selectedCharacter.type}
+								<span className={'character-details__label'}>Type: </span>
+								<span className={'character-details__value'}>
+									{selectedCharacter.type}
+								</span>
 							</p>
 						)}
 						<p>
-							<Label>Gender: </Label>
-							{selectedCharacter.gender}
+							<span className={'character-details__label'}>Gender: </span>
+							<span className={'character-details__value'}>
+								{selectedCharacter.gender}
+							</span>
 						</p>
 						{selectedCharacter.origin && (
 							<p>
-								<Label>Origin: </Label>
-								{selectedCharacter.origin.name}
+								<span className={'character-details__label'}>Origin: </span>
+								<span className={'character-details__value'}>
+									{selectedCharacter.origin.name}
+								</span>
 							</p>
 						)}
 						{selectedCharacter.location && (
 							<p>
-								<Label>Location: </Label>
-								{selectedCharacter.location.name}
+								<span className={'character-details__label'}>Location: </span>
+								<span className={'character-details__value'}>
+									{selectedCharacter.location.name}
+								</span>
 							</p>
 						)}
 					</section>
