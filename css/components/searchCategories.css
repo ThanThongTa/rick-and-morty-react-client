@@ -4,3 +4,12 @@
 	justify-content: center;
 	align-self: center;
 }
+
+.search-categories__radio {
+	--card-background: var(--teal-11);
+	--card-background-highlight: var(--teal-9);
+	--card-text: var(--teal-1);
+	--card-text-hightlight: var(--teal-1);
+	--card-outline-highlight: var(--teal-5);
+	font-weight: var(--font-weight-1);
+}

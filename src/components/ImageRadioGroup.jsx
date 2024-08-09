@@ -36,7 +36,7 @@ export default function ImageRadioGroup({
 									src={item.image}
 									alt={item.name}
 								/>
-								{item.name}
+								<section className="image-radio__name">{item.name}</section>
 							</Radio>
 						)
 				)}

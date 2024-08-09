@@ -20,7 +20,11 @@ export default function CharacterResultDetails() {
 						Character Details
 					</span>
 					<section className="character-details">
-						<img src={selectedCharacter.image} alt={selectedCharacter.name} />
+						<img
+							className="character-details__image"
+							src={selectedCharacter.image}
+							alt={selectedCharacter.name}
+						/>
 						<p>
 							<span className={'character-details__label'}>Name: </span>
 							<span className={'character-details__value'}>

@@ -3,7 +3,7 @@ import SearchRadioGroup from './SearchRadioGroup';
 
 /* Komponente für die Einstellungen der Charaktersuche */
 export default function CharacterResultFilters() {
-	const characters = useCharactersStore((state) => state.filteredCharacters);
+	const characters = useCharactersStore((state) => state.characters);
 	/* Ermitteln der Werte für die Species und Types */
 	const species = Array.from(
 		new Set(characters.map((character) => character.species))

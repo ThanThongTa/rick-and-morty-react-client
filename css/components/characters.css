@@ -1,9 +1,53 @@
-.filters--species__radio-section,
-.filters--types__radio-section,
 .list--characters__radio-section {
 	padding-block-end: 1em;
 }
 
 .list--characters__radio-group {
 	padding-block-end: 1em;
+}
+
+.filters--species__radio-section,
+.filters--types__radio-section,
+.filters--status__radio-section,
+.filters--gender__radio-section {
+	padding-inline-start: 0;
+	padding-block-end: 1em;
+}
+
+.filters--types__label,
+.filters--species__label,
+.filters--status__label,
+.filters--gender__label {
+	font-weight: var(--font-weight-1);
+}
+
+.filters--types__radio,
+.filters--species__radio,
+.filters--status__radio,
+.filters--gender__radio {
+	font-weight: var(--font-weight-1);
+}
+
+.character-details {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
+	padding-block-end: 1em;
+}
+
+.character-details__image {
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	grid-row: span 6;
+}
+
+.character-details__label {
+	font-weight: var(--font-weight-1);
+}
+
+.character-details__value {
+	font-weight: var(--font-weight-6);
+}
+
+.character-details-wrapper {
 }

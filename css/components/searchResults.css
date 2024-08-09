@@ -5,21 +5,29 @@
 	justify-content: center;
 	margin-inline: auto;
 	margin-block-start: 1rem;
+	margin-block-end: 1rem;
 	width: var(---max-width-s);
 }
 
 .search-results__section {
 	display: grid;
 	gap: 1rem;
-	/* width: var(--half-width-s, calc(var(--max-width-s) / 2)); */
 	border: 1px solid var(--section-border-color, var(--border-color));
 	border-radius: var(--border-radius-l);
 	background-color: var(--section-bg-color, var(--content-background));
-	scrollbar-color: var(--border-color) var(--scrollbar-background);
+	scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-background);
 }
 
 .search-results__filters {
-	--section-border-color: yellow;
+	--section-border-color: transparent;
+	--section-bg-color: var(--yellow-12);
+	--scrollbar-background: var(--yellow-10);
+	--scrollbar-thumb: var(--yellow-5);
+	--card-background: var(--yellow-11);
+	--card-background-highlight: var(--yellow-9);
+	--card-text: var(--yellow-1);
+	--card-text-hightlight: var(--yellow-1);
+	--card-outline-highlight: var(--yellow-5);
 }
 
 .search-results__info {
@@ -30,6 +38,7 @@
 	--section-border-color: transparent;
 	--section-bg-color: var(--red-12);
 	--scrollbar-background: var(--red-10);
+	--scrollbar-thumb: var(--red-5);
 	--card-background: var(--red-11);
 	--card-background-highlight: var(--red-7);
 	--card-text: var(--red-1);
@@ -40,11 +49,22 @@
 .search-results__images {
 	--section-border-color: transparent;
 	--section-bg-color: var(--blue-12);
+	--scrollbar-background: var(--blue-10);
+	--scrollbar-thumb: var(--blue-5);
+	--card-background: var(--blue-11);
+	--card-background-highlight: var(--blue-7);
+	--card-text: var(--blue-1);
+	--card-text-hightlight: var(--blue-5);
+	--card-outline-highlight: var(--blue-5);
 }
 
 .search-results__details {
 	--section-border-color: transparent;
 	--section-bg-color: var(--orange-12);
+}
+
+.section-label {
+	font-weight: var(--font-weight-1);
 }
 
 .section-wrapper {

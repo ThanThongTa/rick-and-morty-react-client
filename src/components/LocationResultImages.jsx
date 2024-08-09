@@ -27,7 +27,9 @@ export default function LocationResultImages() {
 								src={character.image}
 								alt={character.name}
 							/>
-							{character.name}
+							<section className="location-image__name">
+								{character.name}
+							</section>
 						</section>
 					))}
 				</section>

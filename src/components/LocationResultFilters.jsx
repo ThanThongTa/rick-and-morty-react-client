@@ -4,7 +4,7 @@ import SearchRadioGroup from './SearchRadioGroup';
 /* Komponente für die Anzeige der Filter für die Locations */
 export default function LocationResultFilters() {
 	/* Auslesen aktueller Werte aus Zustand */
-	const allLocations = useLocationsStore((state) => state.filteredLocations);
+	const allLocations = useLocationsStore((state) => state.locations);
 	const selectedType = useLocationsStore(
 		(state) => state.currentlySelectedType
 	);
@@ -31,7 +31,7 @@ export default function LocationResultFilters() {
 
 	return (
 		<section className="location-filters-wrapper section-wrapper">
-			<span className="character-filters__heading section-label">
+			<span className="location-filters__heading section-label">
 				Location Filters
 			</span>
 			{/* Radio-Group für die Types der Locations */}
