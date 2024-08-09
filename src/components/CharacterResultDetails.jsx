@@ -25,53 +25,53 @@ export default function CharacterResultDetails() {
 							src={selectedCharacter.image}
 							alt={selectedCharacter.name}
 						/>
-						<p>
+						<section className="character-details__info">
 							<span className={'character-details__label'}>Name: </span>
 							<span className={'character-details__value'}>
 								{selectedCharacter.name}
 							</span>
-						</p>
-						<p>
+						</section>
+						<section className="character-details__info">
 							<span className={'character-details__label'}>Status: </span>
 							<span className={'character-details__value'}>
 								{selectedCharacter.status}
 							</span>
-						</p>
-						<p>
+						</section>
+						<section className="character-details__info">
 							<span className={'character-details__label'}>Species: </span>
 							<span className={'character-details__value'}>
 								{selectedCharacter.species}
 							</span>
-						</p>
+						</section>
 						{selectedCharacter.type && (
-							<p>
+							<section className="character-details__info">
 								<span className={'character-details__label'}>Type: </span>
 								<span className={'character-details__value'}>
 									{selectedCharacter.type}
 								</span>
-							</p>
+							</section>
 						)}
-						<p>
+						<section className="character-details__info">
 							<span className={'character-details__label'}>Gender: </span>
 							<span className={'character-details__value'}>
 								{selectedCharacter.gender}
 							</span>
-						</p>
+						</section>
 						{selectedCharacter.origin && (
-							<p>
+							<section className="character-details__info">
 								<span className={'character-details__label'}>Origin: </span>
 								<span className={'character-details__value'}>
 									{selectedCharacter.origin.name}
 								</span>
-							</p>
+							</section>
 						)}
 						{selectedCharacter.location && (
-							<p>
+							<section className="character-details__info">
 								<span className={'character-details__label'}>Location: </span>
 								<span className={'character-details__value'}>
 									{selectedCharacter.location.name}
 								</span>
-							</p>
+							</section>
 						)}
 					</section>
 				</section>

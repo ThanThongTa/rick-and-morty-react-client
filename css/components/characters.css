@@ -38,7 +38,7 @@
 .character-details__image {
 	width: 100%;
 	aspect-ratio: 1 / 1;
-	grid-row: span 6;
+	grid-row: span 8;
 }
 
 .character-details__label {
@@ -47,7 +47,4 @@
 
 .character-details__value {
 	font-weight: var(--font-weight-6);
-}
-
-.character-details-wrapper {
 }
