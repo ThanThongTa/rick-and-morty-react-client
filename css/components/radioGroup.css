@@ -13,11 +13,9 @@
 .search-radio {
 	display: flex;
 	align-items: center;
-	gap: 0.571rem;
-	font-size: 1.143rem;
 	color: var(--text-color);
 	forced-color-adjust: none;
-	padding: 0.5em;
+	padding: var(--padding-s);
 	background-color: var(--card-background);
 	color: var(--card-text);
 	&[data-selected] {
@@ -38,11 +36,11 @@
 }
 
 .image-radio__name {
-	padding: 0.5em;
+	padding: var(--padding-s);
 }
 
 .text-radio {
-	padding: 0.5em;
+	padding: var(--padding-s);
 	font-weight: var(--font-weight-1);
 }
 
@@ -54,18 +52,16 @@
 .label-section {
 	display: flex;
 	align-items: center;
-	gap: 1rem;
+	gap: var(--default-gap);
 	font-weight: var(--font-weight-1);
 }
 
 .radio-section {
 	display: flex;
-	gap: 1rem;
-	margin-block-start: 1rem;
-	padding-inline-start: 10em;
+	gap: var(--default-gap);
+	margin-block-start: var(--default-margin);
 	overflow-y: auto;
 	scrollbar-gutter: stable;
-	min-height: 4rem;
 	width: 100%;
 	position: relative;
 }
@@ -74,22 +70,17 @@
 .text-radio-section {
 	display: grid;
 	grid-auto-flow: column;
-	gap: 1em;
+	gap: var(--default-gap);
 	overflow-y: auto;
 	scrollbar-gutter: stable;
 	width: 100%;
 	position: relative;
-	padding-inline-start: 0.5em;
-	padding-block-start: 0.5em;
+	padding-inline-start: var(--padding-s);
+	padding-block-start: var(--padding-s);
 }
 
 .image-radio-section {
-	min-height: 14em;
-	grid-auto-columns: 150px;
-}
-
-.text-radio-section {
-	min-height: 7em;
+	grid-auto-columns: var(--image-size-m);
 }
 
 .episode-images,
@@ -101,6 +92,6 @@
 .episode-images__wrapper {
 	display: grid;
 	grid-auto-flow: column;
-	grid-auto-columns: 100px;
-	gap: 1rem;
+	grid-auto-columns: var(--image-size-s);
+	gap: var(--default-gap);
 }

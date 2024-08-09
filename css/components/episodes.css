@@ -1,11 +1,11 @@
 .episode-list__section,
 .episode-images {
-	margin-block-end: 1em;
+	margin-block-end: var(--default-margin);
 }
 
 .list--episodes__radio-section,
 .episode-images__wrapper {
-	padding-block-end: 1em;
+	padding-block-end: var(--default-padding);
 }
 
 .list--episodes__label {
@@ -17,7 +17,7 @@
 }
 
 .episode__label {
-	gap: 1rem;
+	gap: var(--default-gap);
 }
 
 .episode-images__item {
@@ -27,7 +27,7 @@
 }
 
 .episode-image__name {
-	padding: 0.5em;
+	padding: var(--padding-s);
 }
 
 .episode-details__heading {

@@ -1,9 +1,6 @@
-.list--characters__radio-section {
-	padding-block-end: 1em;
-}
-
+.list--characters__radio-section,
 .list--characters__radio-group {
-	padding-block-end: 1em;
+	padding-block-end: var(--default-padding);
 }
 
 .filters--species__radio-section,
@@ -11,7 +8,7 @@
 .filters--status__radio-section,
 .filters--gender__radio-section {
 	padding-inline-start: 0;
-	padding-block-end: 1em;
+	padding-block-end: var(--default-padding);
 }
 
 .filters--types__label,
@@ -31,8 +28,8 @@
 .character-details {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	gap: 1rem;
-	padding-block-end: 1em;
+	gap: var(--default-gap);
+	padding-block-end: var(--default-padding);
 }
 
 .character-details__image {

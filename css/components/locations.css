@@ -1,23 +1,17 @@
-.list--locations__radio-section {
-	padding-block-end: 1em;
-}
-
-.list--locations__radio-group {
-	padding-block-end: 1em;
+.list--locations__radio-group,
+.list--locations__radio-section,
+.location-images__wrapper {
+	padding-block-end: var(--default-padding);
 }
 
 .location-images {
-	margin-block-end: 1em;
-}
-
-.location-images__wrapper {
-	padding-block-end: 1em;
+	margin-block-end: var(--default-margin);
 }
 
 .filters--dimensions__radio-section,
 .filters--types__radio-section {
 	padding-inline-start: 0;
-	padding-block-end: 1em;
+	padding-block-end: var(--default-padding);
 }
 
 .filters--dimensions__label,
@@ -47,5 +41,5 @@
 }
 
 .location-image__name {
-	padding: 0.5em;
+	padding: var(--padding-s);
 }

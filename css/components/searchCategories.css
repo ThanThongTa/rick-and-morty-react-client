@@ -1,6 +1,6 @@
 .search-parameters-section {
 	display: flex;
-	gap: 1rem;
+	gap: var(--default-gap);
 	justify-content: center;
 	align-self: center;
 }

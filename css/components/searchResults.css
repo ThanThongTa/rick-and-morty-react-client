@@ -1,25 +1,25 @@
 .search-results {
 	display: grid;
 	flex-wrap: wrap;
-	gap: 1rem;
+	gap: var(--default-gap);
 	justify-content: center;
 	margin-inline: auto;
-	margin-block-start: 1rem;
-	margin-block-end: 1rem;
+	margin-block-start: var(--default-margin);
+	margin-block-end: var(--default-margin);
 	width: var(---max-width-s);
 }
 
 .search-results__section {
 	display: grid;
-	gap: 1rem;
-	border: 1px solid var(--section-border-color, var(--border-color));
+	gap: var(--default-gap);
+	border: var(--border-width) solid
+		var(--section-border-color, var(--border-color));
 	border-radius: var(--border-radius-l);
 	background-color: var(--section-bg-color, var(--content-background));
 	scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-background);
 }
 
 .search-results__filters {
-	--section-border-color: transparent;
 	--section-bg-color: var(--yellow-12);
 	--scrollbar-background: var(--yellow-10);
 	--scrollbar-thumb: var(--yellow-5);
@@ -30,12 +30,7 @@
 	--card-outline-highlight: var(--yellow-5);
 }
 
-.search-results__info {
-	--section-border-color: greenyellow;
-}
-
 .search-results__list {
-	--section-border-color: transparent;
 	--section-bg-color: var(--red-12);
 	--scrollbar-background: var(--red-10);
 	--scrollbar-thumb: var(--red-5);
@@ -47,7 +42,6 @@
 }
 
 .search-results__images {
-	--section-border-color: transparent;
 	--section-bg-color: var(--blue-12);
 	--scrollbar-background: var(--blue-10);
 	--scrollbar-thumb: var(--blue-5);
@@ -59,7 +53,6 @@
 }
 
 .search-results__details {
-	--section-border-color: transparent;
 	--section-bg-color: var(--orange-12);
 }
 
@@ -68,8 +61,8 @@
 }
 
 .section-wrapper {
-	margin-block-start: 1em;
-	margin-inline: 1em;
+	margin-block-start: var(--default-margin);
+	margin-inline: var(--default-margin);
 	display: grid;
-	gap: 1rem;
+	gap: var(--default-gap);
 }

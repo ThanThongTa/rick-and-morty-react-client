@@ -1,5 +1,5 @@
 .search-input {
-	margin-inline-start: 0.5rem;
-	padding-inline-start: 0.5rem;
+	margin-inline-start: var(--margin-s);
+	padding-inline-start: var(--padding-s);
 	outline-color: var(--theme-accent-color);
 }

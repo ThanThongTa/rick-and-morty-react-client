@@ -1,5 +1,13 @@
 .search-client {
 	display: grid;
+	--default-gap: 1rem;
+	--default-margin: 1rem;
+	--default-padding: 1rem;
+	--margin-s: 0.5rem;
+	--padding-s: 0.5rem;
+	--border-width: 0;
+	--image-size-m: 150px;
+	--image-size-s: 100px;
 }
 
 .heading {
@@ -12,7 +20,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	gap: 1rem;
+	gap: var(--default-gap);
 	margin-inline: auto;
 	min-width: var(--min-width-s);
 }
