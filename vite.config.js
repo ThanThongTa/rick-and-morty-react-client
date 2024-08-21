@@ -11,6 +11,9 @@ export default defineConfig({
 			},
 		}),
 	],
+	css: {
+		devSourcemap: true,
+	},
 	/*   server: {
     open: true,
   }, */
